@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>قصص الأنبياء</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#080d1a; --night-2:#0f1c33;
+    --gold:#c9a24b; --gold-2:#f0d38a; --gold-deep:#8a6a26; --gold-soft:#e8caa0;
+    --lapis:#2f5d8a; --lapis-soft:#7fa8cf;
+    --ink:#f3f0e6; --ink-dim:#9fb0c7;
+    --line:rgba(201,162,75,0.28); --line-soft:rgba(201,162,75,0.14);
+    --done:#3f9d78;
+    --arfs:17px; --lh:1.9;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; min-height:100%;}
+  body{
+    background:
+      radial-gradient(1000px 500px at 50% -8%, #16233f 0%, transparent 62%),
+      radial-gradient(800px 500px at 100% 100%, rgba(47,93,138,0.18) 0%, transparent 60%),
+      linear-gradient(180deg, var(--night) 0%, #05080f 100%);
+    background-attachment:fixed;
+    color:var(--ink); font-family:'Tajawal',sans-serif; overflow-x:hidden;
+  }
+  body.theme-paper{
+    background: linear-gradient(180deg,#F8F3E7,#EDE3CE); color:#2B2015;
+    --ink:#2B2015; --ink-dim:#6b5a42; --line:rgba(169,119,47,0.28); --line-soft:rgba(169,119,47,0.12);
+    --gold:#A9772F; --gold-2:#7c5620; --gold-soft:#8a5a2b; --lapis:#3f6a94; --lapis-soft:#5c85ab;
+  }
+
+  .bg-motif{
+    position:fixed; inset:0; z-index:0; opacity:0.13; pointer-events:none;
+    background-image:
+      radial-gradient(circle at 0 0, transparent 9px, var(--gold) 9.6px, transparent 10.2px),
+      radial-gradient(circle at 60px 0, transparent 9px, var(--gold) 9.6px, transparent 10.2px),
+      radial-gradient(circle at 30px 52px, transparent 9px, var(--gold) 9.6px, transparent 10.2px);
+    background-size:60px 104px;
+    -webkit-mask-image:radial-gradient(1000px 800px at 50% 8%, #000 0%, transparent 76%);
+    mask-image:radial-gradient(1000px 800px at 50% 8%, #000 0%, transparent 76%);
+  }
+  .frieze{
+    position:relative; z-index:1; height:10px; margin:0 auto; max-width:560px;
+    background-image:repeating-linear-gradient(135deg, transparent 0 6px, var(--gold) 6px 7px, transparent 7px 12px),
+                      repeating-linear-gradient(45deg, transparent 0 6px, var(--gold) 6px 7px, transparent 7px 12px);
+    opacity:.5;
+  }
+  .wrap{position:relative; z-index:1; max-width:560px; margin:0 auto; padding:20px 16px 90px;}
+
+  header{text-align:center; margin-bottom:16px;}
+  header .eyebrow{font-size:11px; letter-spacing:4px; color:var(--gold-soft); text-transform:uppercase;}
+  header .divider{display:flex; align-items:center; justify-content:center; gap:8px; margin:6px 0;}
+  header .divider .ln{height:1px; width:36px; background:linear-gradient(90deg, transparent, var(--gold), transparent);}
+  header h1{
+    font-family:'Amiri', serif; font-weight:700; font-size:29px; margin:2px 0 4px;
+    background:linear-gradient(180deg, var(--gold-2), var(--gold-deep));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  header .sub{font-size:12px; color:var(--ink-dim);}
+
+  .progress-wrap{ margin:16px 0 18px; }
+  .progress-label{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--ink-dim); margin-bottom:6px; }
+  .progress-track{ height:7px; border-radius:6px; background:rgba(255,255,255,0.06); overflow:hidden; }
+  body.theme-paper .progress-track{ background:rgba(0,0,0,0.06); }
+  .progress-fill{ height:100%; background:linear-gradient(90deg,var(--gold-deep),var(--gold)); border-radius:6px; transition:width .4s ease; }
+
+  .tabs{
+    display:flex; gap:6px; background:linear-gradient(180deg, #101d34, #0b1526);
+    border:1px solid var(--line); border-radius:16px; padding:5px; margin-bottom:16px;
+  }
+  body.theme-paper .tabs{ background:linear-gradient(180deg,#F0E8D4,#E6DAB9); }
+  .tabs button{
+    flex:1; padding:11px 6px; border:none; border-radius:12px; background:transparent;
+    color:var(--ink-dim); font-family:'Tajawal'; font-weight:700; font-size:12.5px; cursor:pointer;
+  }
+  .tabs button.active{
+    background:linear-gradient(180deg, rgba(201,162,75,0.22), rgba(201,162,75,0.06));
+    color:var(--gold-2); box-shadow:inset 0 0 0 1px var(--line);
+  }
+
+  input[type="search"]{
+    width:100%; padding:11px 14px; border-radius:12px; border:1px solid var(--line);
+    background:rgba(255,255,255,0.03); color:var(--ink); font-family:'Tajawal'; font-size:14px; margin-bottom:16px;
+  }
+  body.theme-paper input[type="search"]{ background:rgba(0,0,0,0.02); }
+
+  .panel{display:none;} .panel.active{display:block; animation:fadeIn .3s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  /* ---- grid (library view) ---- */
+  .prophet-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .prophet-card{
+    border:1px solid var(--line); border-radius:16px; padding:16px 12px; cursor:pointer; position:relative; overflow:hidden;
+    background:rgba(255,255,255,0.02); text-align:center;
+  }
+  .prophet-card .ring{ position:absolute; top:10px; left:10px; width:8px; height:8px; border-radius:50%; background:var(--line); }
+  .prophet-card .ring.done{ background:var(--done); }
+  .prophet-card .icon{font-size:26px;}
+  .prophet-card .name{font-family:'Amiri',serif; font-size:16px; margin-top:6px;}
+  .prophet-card .title{font-size:10.5px; color:var(--ink-dim); margin-top:2px;}
+
+  /* ---- timeline (signature element) ---- */
+  .timeline{ position:relative; padding-inline-start:26px; }
+  .timeline::before{
+    content:''; position:absolute; inset-inline-start:9px; top:6px; bottom:6px; width:2px;
+    background:linear-gradient(180deg, var(--gold), var(--lapis), var(--gold));
+    opacity:.5;
+  }
+  .tl-item{ position:relative; padding:0 0 22px 14px; cursor:pointer; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-node{
+    position:absolute; inset-inline-start:-26px; top:2px; width:20px; height:20px; border-radius:50%;
+    background:var(--night-2); border:2px solid var(--gold); display:flex; align-items:center; justify-content:center;
+    font-size:9.5px; font-weight:700; color:var(--gold-2); z-index:1;
+  }
+  body.theme-paper .tl-node{ background:#F3EBD8; }
+  .tl-node.done{ background:var(--done); border-color:var(--done); color:#08150f; }
+  .tl-card{
+    border:1px solid var(--line); border-radius:14px; padding:12px 14px; background:rgba(255,255,255,0.015);
+    display:flex; align-items:center; gap:10px;
+  }
+  .tl-card .icon{font-size:20px;}
+  .tl-card .txt .name{font-family:'Amiri',serif; font-size:15px;}
+  .tl-card .txt .title{font-size:10.5px; color:var(--ink-dim); margin-top:1px;}
+
+  .empty-state{ text-align:center; padding:50px 20px; color:var(--ink-dim); font-size:13px; }
+
+  /* ---- detail view ---- */
+  .crumb{ display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:12px; color:var(--ink-dim); margin-bottom:14px; }
+  .crumb button{ background:none; border:none; color:var(--gold-soft); font-family:inherit; font-size:12px; cursor:pointer; padding:0; }
+
+  .detail-head{
+    border:1px solid var(--line); border-radius:20px; padding:22px 18px; margin-bottom:18px; position:relative; text-align:center;
+    background:linear-gradient(160deg, rgba(201,162,75,0.12), rgba(47,93,138,0.14));
+    box-shadow:inset 0 0 0 1px rgba(201,162,75,0.10), 0 10px 30px rgba(0,0,0,0.35);
+  }
+  .detail-head::before, .detail-head::after{ content:''; position:absolute; width:14px; height:14px; border:var(--gold) solid; opacity:.55; }
+  .detail-head::before{ top:8px; inset-inline-start:8px; border-width:1.5px 0 0 1.5px; }
+  .detail-head::after{ top:8px; inset-inline-end:8px; border-width:1.5px 1.5px 0 0; }
+  .detail-head .icon{ font-size:38px; }
+  .detail-head .name{ font-family:'Amiri',serif; font-size:26px; margin:8px 0 2px; color:var(--gold-2); }
+  .detail-head .title{ font-size:12.5px; color:var(--ink-dim); }
+  .detail-head .meta-row{ display:flex; justify-content:center; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .meta-pill{ font-size:10.5px; padding:4px 10px; border-radius:20px; border:1px solid var(--line); color:var(--gold-soft); }
+  .detail-actions{ display:flex; gap:8px; margin-top:14px; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    background:linear-gradient(180deg,var(--gold-2),var(--gold-deep)); color:#1a1200; border:none;
+    padding:10px 18px; border-radius:14px; font-family:'Tajawal'; font-weight:700; font-size:13px; cursor:pointer;
+  }
+  .btn.secondary{ background:transparent; border:1px solid var(--line); color:var(--gold-soft); }
+  .btn.playing{ background:linear-gradient(180deg,var(--lapis-soft),var(--lapis)); color:#fff; }
+
+  h3.section-title{font-family:'Amiri',serif; font-size:15px; color:var(--gold-2); margin:20px 0 10px;}
+
+  .stage-card{
+    border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:12px;
+    background:rgba(255,255,255,0.015); position:relative;
+  }
+  .stage-num{
+    position:absolute; top:-10px; inset-inline-start:14px; background:var(--night); border:1px solid var(--gold);
+    color:var(--gold-2); font-size:11px; font-weight:700; width:22px; height:22px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  body.theme-paper .stage-num{ background:#F8F3E7; }
+  .stage-title{ font-family:'Amiri',serif; font-size:15px; color:var(--gold-soft); margin:4px 0 8px; }
+  .stage-text{ font-size:var(--arfs); line-height:var(--lh); text-align:justify; }
+
+  .lesson-box{
+    border:1px solid var(--line); border-radius:16px; padding:16px; margin:16px 0; position:relative;
+    background:linear-gradient(160deg, rgba(47,93,138,0.14), rgba(201,162,75,0.06));
+    border-inline-start:3px solid var(--lapis-soft);
+  }
+  .lesson-box .lbl{ font-size:11px; color:var(--lapis-soft); letter-spacing:1.5px; margin-bottom:6px; }
+  .lesson-box .txt{ font-size:14.5px; line-height:1.8; }
+
+  .surah-refs{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+  .surah-chip{ font-size:11.5px; padding:6px 12px; border-radius:20px; border:1px solid var(--line); color:var(--gold-soft); background:rgba(255,255,255,0.02); }
+
+  .nav-buttons{display:flex; justify-content:space-between; gap:10px; margin-top:22px;}
+  .nav-buttons button{
+    flex:1; padding:12px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,0.02); color:var(--ink);
+    font-family:'Tajawal'; font-size:12.5px; cursor:pointer;
+  }
+  .nav-buttons button:disabled{opacity:.35; cursor:default;}
+
+  .fab{
+    position:fixed; bottom:22px; left:16px; z-index:26; width:48px; height:48px; border-radius:50%;
+    background:var(--gold); color:#1a1200; display:flex; align-items:center; justify-content:center; font-size:19px;
+    box-shadow:0 4px 16px rgba(0,0,0,0.4); border:none; cursor:pointer;
+  }
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%); background:var(--night-2); border:1px solid var(--line);
+    padding:10px 16px; border-radius:10px; font-size:13px; box-shadow:0 6px 18px rgba(0,0,0,.4); z-index:50;
+    opacity:0; transition:opacity .25s ease; pointer-events:none; max-width:88vw; text-align:center; color:var(--ink);
+  }
+  .toast.show{opacity:1;}
+  body.theme-paper .toast{ background:#F3EBD8; }
+
+  .drawer-overlay{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:29; opacity:0; pointer-events:none; transition:opacity .25s ease;}
+  .drawer-overlay.open{opacity:1; pointer-events:auto;}
+  .drawer{
+    position:fixed; top:0; bottom:0; right:0; width:min(320px,88vw); background:var(--night-2); z-index:30;
+    transform:translateX(100%); transition:transform .3s cubic-bezier(.4,0,.2,1); overflow-y:auto;
+    border-left:1px solid var(--line); padding:16px;
+  }
+  body.theme-paper .drawer{ background:#F3EBD8; }
+  .drawer.open{transform:translateX(0);}
+  .drawer-header{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .drawer-header h2{font-family:'Amiri',serif; font-size:16px; margin:0; color:var(--gold-2);}
+  .close-btn{background:rgba(255,255,255,0.05); border:1px solid var(--line); border-radius:8px; width:32px; height:32px; cursor:pointer; color:var(--ink);}
+  .drawer h3{font-family:'Amiri',serif; font-size:13px; margin:16px 0 8px; color:var(--gold-2);}
+  .drawer h3:first-of-type{margin-top:0;}
+  .slider-row{display:flex; align-items:center; gap:10px;}
+  input[type="range"]{flex:1; accent-color:var(--gold);}
+  .theme-row{display:flex; gap:10px;}
+  .theme-sw{ flex:1; height:44px; border-radius:12px; border:2px solid var(--line); cursor:pointer; position:relative; }
+  .theme-sw.active{border-color:var(--gold);}
+  .theme-sw span{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.5);}
+  .option-row{display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--line-soft); gap:10px; font-size:13px;}
+  .option-row.no-border{border-bottom:none;}
+
+  footer{text-align:center; margin-top:26px; font-size:11px; color:var(--ink-dim); line-height:1.8;}
+</style>
+</head>
+<body>
+<div class="bg-motif"></div>
+<div class="frieze"></div>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">أحسن القصص</div>
+    <div class="divider"><span class="ln"></span>
+      <svg viewBox="0 0 24 24" width="14" fill="#c9a24b"><path d="M12 0l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 15.2l-6.2 4.5 2.4-7.6L2 7.6h7.6z"></path></svg>
+    <span class="ln"></span></div>
+    <h1>قصص الأنبياء</h1>
+    <div class="sub">٢٥ نبيًا · سلسلة نبوة واحدة من آدم إلى محمد ﷺ</div>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>تقدّمك في القراءة</span><span id="progressText">٠ من ٢٥</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+  </div>
+
+  <nav class="tabs">
+    <button class="active" data-tab="library">المكتبة</button>
+    <button data-tab="timeline">سلسلة النبوة</button>
+  </nav>
+
+  <input type="search" id="searchBox" placeholder="ابحث عن نبي بالاسم">
+
+  <!-- LIBRARY -->
+  <section class="panel active" id="panel-library">
+    <div class="prophet-grid" id="libraryGrid"></div>
+    <div class="empty-state" id="libraryEmpty" style="display:none;">لا يوجد نبي مطابق لبحثك.</div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="panel" id="panel-timeline">
+    <div class="timeline" id="timelineList"></div>
+    <div class="empty-state" id="timelineEmpty" style="display:none;">لا يوجد نبي مطابق لبحثك.</div>
+  </section>
+
+  <!-- DETAIL -->
+  <section id="detailView" style="display:none;">
+    <div class="crumb"><button id="backBtn">← المكتبة</button><span id="crumbName"></span></div>
+
+    <div class="detail-head">
+      <div class="icon" id="dIcon"></div>
+      <div class="name" id="dName"></div>
+      <div class="title" id="dTitle"></div>
+      <div class="meta-row">
+        <span class="meta-pill" id="dOrder"></span>
+        <span class="meta-pill" id="dMentions"></span>
+      </div>
+      <div class="detail-actions">
+        <button class="btn" id="listenBtn">🔊 استماع للقصة</button>
+        <button class="btn secondary" id="doneBtn">☆ وضع علامة "قرأتها"</button>
+        <button class="btn secondary" id="shareBtn">📤 مشاركة</button>
+      </div>
+    </div>
+
+    <h3 class="section-title">القصة</h3>
+    <div id="stagesList"></div>
+
+    <div class="lesson-box">
+      <div class="lbl">العبرة والدرس</div>
+      <div class="txt" id="dLesson"></div>
+    </div>
+
+    <h3 class="section-title">مواضع الذكر في القرآن</h3>
+    <div class="surah-refs" id="dSurahs"></div>
+
+    <div class="nav-buttons">
+      <button id="prevProphet">→ النبي السابق</button>
+      <button id="nextProphet">النبي التالي ←</button>
+    </div>
+  </section>
+
+  <footer>
+    القصص مستقاة من ظاهر القرآن الكريم وما صحّ من السيرة، بأسلوب مختصر ميسّر للعرض العام.<br>
+    يُحفظ تقدّم قراءتك على هذا الجهاز فقط.
+  </footer>
+</div>
+
+<button class="fab" id="settingsBtn" title="الإعدادات">⚙️</button>
+<div class="toast" id="toast"></div>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header"><h2>الإعدادات</h2><button class="close-btn" id="closeDrawer">✕</button></div>
+  <h3>المظهر</h3>
+  <div class="theme-row">
+    <div class="theme-sw active" data-theme="night" style="background:#0d1526;"><span>ليلي</span></div>
+    <div class="theme-sw" data-theme="paper" style="background:#EDE3CE;"><span style="color:#2B2015; text-shadow:none;">ورقي</span></div>
+  </div>
+  <h3>حجم الخط</h3>
+  <div class="slider-row"><span style="font-size:12px;">أ</span><input type="range" id="fontSize" min="14" max="26" value="17"><span style="font-size:20px;">أ</span></div>
+  <h3>سرعة الاستماع</h3>
+  <div class="slider-row"><span style="font-size:11px;">بطيء</span><input type="range" id="voiceRate" min="70" max="150" value="95"><span style="font-size:11px;">سريع</span></div>
+  <h3>التقدّم</h3>
+  <div class="option-row no-border"><span>مسح كل علامات القراءة</span><button class="btn secondary" id="resetProgressBtn" style="padding:8px 14px; font-size:12px;">مسح</button></div>
+</div>
+
+<script>
+(function(){
+  /* ---------------- Data: 25 prophets in chronological (Quranic) order ---------------- */
+  const PROPHETS = [
+    { id:'adam', order:1, name:'آدم عليه السلام', title:'أبو البشر', icon:'🌱', mentions:'25 ذكرًا',
+      stages:[
+        {title:'الخلق والاستخلاف', text:'خلق الله آدم من طين بيده، ونفخ فيه من روحه، وعلّمه الأسماء كلها، ثم أمر الملائكة بالسجود له تكريمًا، فسجدوا جميعًا إلا إبليس الذي أبى واستكبر وكان من الكافرين.'},
+        {title:'الجنة والزلة', text:'أسكن الله آدم وزوجه حواء الجنة، وأباح لهما الأكل من كل شيء فيها إلا شجرة واحدة نهاهما عنها. وسوس لهما الشيطان حتى أكلا منها، فبدت لهما سوءاتهما وشعرا بالخجل.'},
+        {title:'الهبوط والتوبة', text:'أُهبط آدم وحواء إلى الأرض، فتلقى آدم من ربه كلمات فتاب عليه، وجعل الله الأرض مستقر البشرية ودار ابتلاء إلى أجل مسمى.'}
+      ],
+      lesson:'الإنسان خطّاء بطبعه، لكن باب التوبة مفتوح دائمًا لمن رجع إلى ربه صادقًا. والاستكبار عن الطاعة، لا الخطأ نفسه، هو أصل هلاك إبليس.',
+      surahs:['البقرة','الأعراف','طه']},
+
+    { id:'idris', order:2, name:'إدريس عليه السلام', title:'الصدّيق النبي', icon:'📚', mentions:'2 ذكرًا',
+      stages:[
+        {title:'الصدق والعلم', text:'وصفه القرآن بالصدق والنبوة، وذكر أنه كان من الصابرين. تنقل بين الناس داعيًا إلى التوحيد وحسن العمل في زمن اتسم بانتشار الغفلة.'},
+        {title:'الرفعة العالية', text:'أخبر القرآن أن الله رفعه مكانًا عليًا، إشارة إلى علو منزلته وقربه من ربه جزاء صبره وإخلاصه في الدعوة.'}
+      ],
+      lesson:'قلة تفاصيل القصة لا تقلل من عظمة صاحبها؛ فالصدق والصبر على الدعوة كفيلان برفعة المكانة عند الله ولو خفيت عن الناس التفاصيل.',
+      surahs:['مريم','الأنبياء']},
+
+    { id:'nuh', order:3, name:'نوح عليه السلام', title:'أول رسل التوحيد لقومه', icon:'🚢', mentions:'43 ذكرًا',
+      stages:[
+        {title:'دعوة طويلة', text:'لبث نوح في قومه ألف سنة إلا خمسين عامًا يدعوهم ليلًا ونهارًا إلى عبادة الله وحده، فما ازدادوا إلا إصرارًا وعنادًا وسخرية منه.'},
+        {title:'بناء السفينة', text:'أوحى الله إليه أن يصنع الفلك، فجعل يبنيها وسط استهزاء قومه به. حتى إذا جاء أمر الله فار التنور علامة على بدء الطوفان.'},
+        {title:'الطوفان والنجاة', text:'حُمل في السفينة من كل زوجين اثنين ومن آمن معه، وهم قلة. أُغرق من كفر بمن فيهم ابنه الذي أبى ركوب السفينة، ثم استوت على الجودي.'}
+      ],
+      lesson:'طول الصبر على الدعوة لا يعني بالضرورة استجابة الجميع؛ فالنتيجة عند الله لا عند كثرة الأتباع، والنسب لا ينفع دون إيمان، كما في قصة ابنه.',
+      surahs:['الأعراف','هود','نوح','القمر']},
+
+    { id:'hud', order:4, name:'هود عليه السلام', title:'نبي عاد', icon:'💨', mentions:'25 ذكرًا',
+      stages:[
+        {title:'قوم عاد وقوتهم', text:'بُعث هود في قوم عاد الذين كانوا أصحاب قوة وبناء عظيم، فدعاهم إلى التوحيد وترك عبادة الأصنام، فكذّبوه واتهموه بالسفاهة.'},
+        {title:'الريح العقيم', text:'لما استمروا في العناد أرسل الله عليهم ريحًا صرصرًا عاتية استمرت أيامًا، دمّرت كل شيء ولم تُبقِ من قومه إلا من آمن معه.'}
+      ],
+      lesson:'القوة المادية والبنيان العظيم لا يحميان من عذاب الله إذا قابل الإنسان النعمة بالكفر والاستكبار.',
+      surahs:['الأعراف','هود','الشعراء','الأحقاف']},
+
+    { id:'salih', order:5, name:'صالح عليه السلام', title:'نبي ثمود', icon:'🐫', mentions:'9 ذكرًا',
+      stages:[
+        {title:'الدعوة إلى ثمود', text:'دعا صالح قومه ثمود الذين كانوا ينحتون من الجبال بيوتًا، إلى عبادة الله وحده، فطلبوا منه معجزة تثبت صدقه.'},
+        {title:'ناقة الله', text:'أخرج الله لهم ناقة من الصخرة آية، وأمرهم صالح أن يتركوها تشرب وترعى ولا يمسوها بسوء، لكنهم عقروها استكبارًا.'},
+        {title:'الصيحة', text:'أخذتهم صيحة شديدة أهلكتهم عن آخرهم بعد ثلاثة أيام من مهلة أنذرهم بها صالح، ونجا هو ومن آمن معه.'}
+      ],
+      lesson:'التحدي بمعجزة واضحة ثم مخالفة العهد بعدها إصرار في الكفر يستحق أشد العقاب؛ والصبر على الأذى من صفات الأنبياء الثابتة.',
+      surahs:['الأعراف','هود','الشعراء','الشمس']},
+
+    { id:'ibrahim', order:6, name:'إبراهيم عليه السلام', title:'خليل الرحمن وأبو الأنبياء', icon:'🔥', mentions:'69 ذكرًا',
+      stages:[
+        {title:'تحطيم الأصنام', text:'واجه إبراهيم قومه وأباه بالحجة، وحطّم أصنامهم إلا كبيرها ليريهم عجزها عن الدفاع عن نفسها، فغضبوا وقرروا حرقه.'},
+        {title:'النار بردًا وسلامًا', text:'ألقوه في نار عظيمة أوقدوها له، فأمر الله النار أن تكون بردًا وسلامًا عليه، فخرج منها سالمًا معجزة ظاهرة.'},
+        {title:'الهجرة وبناء الكعبة', text:'هاجر إبراهيم بأهله، ثم أسكن زوجته هاجر وابنه إسماعيل في وادٍ غير ذي زرع بمكة تنفيذًا لأمر الله، وشارك ابنه لاحقًا في بناء الكعبة ورفع قواعدها.'},
+        {title:'الرؤيا والفداء', text:'رأى في المنام أنه يذبح ابنه إسماعيل، فأخبره بها امتثالًا لأمر الله، فاستسلما لأمر الله معًا، ثم فداه الله بذبح عظيم قبل أن ينفّذ الأمر.'}
+      ],
+      lesson:'التوحيد الخالص يستوجب أحيانًا مفارقة الأهل والقوم وتحمّل أعظم الابتلاءات، والتسليم لأمر الله ولو بدا صعبًا يفتح أبواب الفرج.',
+      surahs:['البقرة','الأنعام','الأنبياء','الصافات','إبراهيم']},
+
+    { id:'lut', order:7, name:'لوط عليه السلام', title:'نبي سدوم', icon:'🌆', mentions:'27 ذكرًا',
+      stages:[
+        {title:'قوم يأتون الفاحشة', text:'بُعث لوط في قوم ابتدعوا فاحشة لم يسبقهم إليها أحد من العالمين، فدعاهم إلى العفة والتوحيد فسخروا منه وهددوه بالطرد.'},
+        {title:'الملائكة ضيوفًا', text:'جاءت الملائكة لوطًا في صورة شبان حسان، فحاول قومه الاعتداء عليهم، فكشفت الملائكة له حقيقتها وأخبرته بموعد هلاك قومه.'},
+        {title:'الهلاك وامرأته', text:'أُمر لوط بالخروج ليلًا بأهله دون التفات، إلا امرأته التي بقيت مع قومها فأصابها ما أصابهم، وقُلبت قراهم رأسًا على عقب.'}
+      ],
+      lesson:'القرابة الزوجية أو الأسرية لا تنفع صاحبها إن اختار الكفر والفساد على الحق، كما حدث مع امرأة لوط.',
+      surahs:['الأعراف','هود','الحجر','الشعراء']},
+
+    { id:'ismail', order:8, name:'إسماعيل عليه السلام', title:'الذبيح وباني الكعبة', icon:'💧', mentions:'12 ذكرًا',
+      stages:[
+        {title:'زمزم في الصحراء', text:'تُرك إسماعيل رضيعًا مع أمه هاجر في وادٍ قاحل بأمر الله، فلما نفد الماء سعت أمه بين الصفا والمروة حتى فجّر الله زمزم تحت قدمي الطفل.'},
+        {title:'الوفاء بالنذر', text:'حين أخبره أبوه إبراهيم برؤيا ذبحه، أجابه إسماعيل بالصبر والتسليم لأمر الله، فكانا مضرب المثل في الطاعة والفداء.'},
+        {title:'بناء الكعبة', text:'شارك إسماعيل أباه في رفع قواعد الكعبة المشرفة، وكانا يدعوان الله أن يتقبل منهما ويجعل ذريتهما أمة مسلمة له.'}
+      ],
+      lesson:'الطاعة الكاملة لأمر الله، حتى في أصعب الاختبارات، تُثمر بركة تمتد لأجيال، كما امتدت بركة زمزم والكعبة إلى اليوم.',
+      surahs:['البقرة','الصافات','مريم']},
+
+    { id:'ishaq', order:9, name:'إسحاق عليه السلام', title:'ابن إبراهيم المبارك', icon:'🌾', mentions:'17 ذكرًا',
+      stages:[
+        {title:'البشارة بالولادة', text:'بشّرت الملائكة إبراهيم وزوجته سارة بولادة إسحاق رغم كبر سنّهما، فتعجبت سارة من الخبر، فأكّدت لها الملائكة أنه أمر الله ولا يُستبعد.'},
+        {title:'امتداد النبوة', text:'بارك الله في إسحاق وجعل من نسله يعقوب ومن بعده أنبياء كثر، استمرارًا لخط النبوة الذي بدأ بجده إبراهيم.'}
+      ],
+      lesson:'بركة الدعاء الصالح والصبر تمتد أحيانًا لتشمل الذرية أجيالًا بعد أجيال.',
+      surahs:['هود','الصافات','مريم']},
+
+    { id:'yaqub', order:10, name:'يعقوب عليه السلام', title:'إسرائيل الله', icon:'💫', mentions:'16 ذكرًا',
+      stages:[
+        {title:'الأبناء الاثنا عشر', text:'رزق يعقوب اثني عشر ابنًا، أحبّ يوسف أكثرهم لما رأى فيه من الصلاح، فحسده إخوته ودبّروا للتخلص منه.'},
+        {title:'الحزن الطويل', text:'حين أخبروه بأن الذئب أكل يوسف، لم يصدقهم تمامًا، وابيضّت عيناه من الحزن الطويل وهو يكظم غيظه وحزنه لله وحده.'},
+        {title:'الفرح باللقاء', text:'حين وصله قميص يوسف من مصر، أدرك رائحته قبل أن يخبره أحد، فردّ الله عليه بصره، واجتمع بابنه بعد سنين طويلة من الفراق.'}
+      ],
+      lesson:'الصبر الجميل الذي لا يشوبه الجزع أمام أقسى المحن هو ما وصف الله به يعقوب، وهو طريق الفرج مهما طال الزمن.',
+      surahs:['البقرة','يوسف']},
+
+    { id:'yusuf', order:11, name:'يوسف عليه السلام', title:'صاحب أحسن القصص', icon:'🌙', mentions:'27 ذكرًا',
+      stages:[
+        {title:'الرؤيا والحسد', text:'رأى يوسف صغيرًا أحد عشر كوكبًا والشمس والقمر ساجدين له، فحذّره أبوه من إخبار إخوته خشية كيدهم، لكن حسدهم دفعهم لإلقائه في غيابة الجب.'},
+        {title:'مصر وامرأة العزيز', text:'بيع يوسف عبدًا في مصر، ونشأ في بيت العزيز، حيث راودته امرأته عن نفسه فاستعصم بالله، وفضّل السجن على المعصية حين تعرض للمكيدة.'},
+        {title:'السجن وتعبير الرؤيا', text:'في السجن فسّر رؤى صاحبيه، ثم رؤيا الملك عن السنين السبع، فأشار بخطة حكيمة لإدارة المحصول أنقذت مصر من المجاعة.'},
+        {title:'اللقاء والعفو', text:'تولى يوسف خزائن مصر بعدله وحكمته، وحين جاء إخوته يطلبون الطعام عرّفهم بنفسه، وعفا عنهم قائلًا: لا تثريب عليكم اليوم، فاجتمع بأبيه من جديد.'}
+      ],
+      lesson:'الصبر على الظلم والفتنة معًا، والتمسك بالعفة رغم الإغراء، يقود في النهاية إلى العزة والتمكين، والعفو عند المقدرة من أخلاق الأنبياء.',
+      surahs:['يوسف']},
+
+    { id:'ayyub', order:12, name:'أيوب عليه السلام', title:'مضرب المثل في الصبر', icon:'🩺', mentions:'4 ذكرًا',
+      stages:[
+        {title:'الابتلاء الشامل', text:'ابتُلي أيوب بفقد المال والأهل ثم بالمرض في جسده سنين طويلة، ومع ذلك لم يفتر لسانه عن حمد الله وذكره.'},
+        {title:'الدعاء والصبر', text:'لم يدعُ أيوب بكشف الضر إلا بعد سنوات، وبأدب رفيع قال: إني مسّني الضر وأنت أرحم الراحمين، دون تسخط أو جزع.'},
+        {title:'الشفاء والعوض', text:'استجاب الله دعاءه، وأمره أن يضرب برجله فنبع ماء بارد للشرب والاغتسال فشُفي، وردّ الله له أهله ومثلهم معهم رحمة منه.'}
+      ],
+      lesson:'الصبر الجميل عند البلاء لا يعني عدم الدعاء، بل الأدب في السؤال والثقة بأن الفرج من عند الله وحده مهما طال الابتلاء.',
+      surahs:['الأنبياء','ص']},
+
+    { id:'shuayb', order:13, name:'شعيب عليه السلام', title:'خطيب الأنبياء', icon:'⚖️', mentions:'11 ذكرًا',
+      stages:[
+        {title:'أهل مدين والتطفيف', text:'بُعث شعيب في أهل مدين الذين كانوا ينقصون المكيال والميزان في تجارتهم، فدعاهم إلى توفية الكيل والعدل وترك الفساد في الأرض.'},
+        {title:'التهديد والصبر', text:'هدده قومه بالطرد إن لم يعد لملتهم، فأجابهم بالحجة موضحًا أنه لا يريد إلا الإصلاح ما استطاع، متوكلًا على الله.'},
+        {title:'العذاب النازل', text:'كذّبوه فأخذتهم صيحة عظيمة وكأن لم يغنوا فيها، ونجا شعيب ومن آمن معه من ذلك العذاب.'}
+      ],
+      lesson:'العدل في المعاملات التجارية جزء أصيل من الدين، والإصلاح الحقيقي يبدأ من صدق المعاملة اليومية بين الناس.',
+      surahs:['الأعراف','هود','الشعراء']},
+
+    { id:'musa', order:14, name:'موسى عليه السلام', title:'كليم الله', icon:'🌊', mentions:'136 ذكرًا',
+      stages:[
+        {title:'اليمّ وقصر فرعون', text:'أُلقي موسى رضيعًا في اليمّ خوفًا من بطش فرعون الذي كان يقتل أبناء بني إسرائيل، فالتقطه آل فرعون ونشأ في قصره وهو عدوهم دون أن يشعروا.'},
+        {title:'النبوة والعصا', text:'كلّمه الله عند جبل الطور وأرسله إلى فرعون بمعجزة العصا التي تنقلب حية، ويده التي تخرج بيضاء من غير سوء.'},
+        {title:'انفلاق البحر', text:'لما أصرّ فرعون على الكفر وطارد بني إسرائيل، ضرب موسى البحر بعصاه فانفلق طريقًا يابسًا، فنجا بقومه وأُغرق فرعون وجنوده.'},
+        {title:'التوراة والسامري', text:'ذهب موسى لميقات ربه فأنزل عليه التوراة، وفي غيابه صنع السامري عجلًا من الحلي يعبده بعض بني إسرائيل، فغضب موسى وأصلح أمرهم.'}
+      ],
+      lesson:'تدبير الله يفوق كل مكر بشري، فمن أُلقي في اليمّ خوفًا نشأ في بيت من أراد قتله، وأعظم القوى المادية لا تصمد أمام أمر الله.',
+      surahs:['البقرة','الأعراف','طه','القصص','الشعراء']},
+
+    { id:'harun', order:15, name:'هارون عليه السلام', title:'وزير أخيه موسى', icon:'🕊️', mentions:'20 ذكرًا',
+      stages:[
+        {title:'الدعم والمؤازرة', text:'طلب موسى من ربه أن يجعل أخاه هارون وزيرًا وعونًا له في تبليغ الرسالة إلى فرعون، لفصاحته وقوة حجته، فاستجاب الله دعاءه.'},
+        {title:'الأمانة في الغياب', text:'حين غاب موسى للميقات استخلف هارون على قومه، فحاول منعهم من عبادة العجل الذي صنعه السامري، لكنهم لم يستجيبوا له حتى عاد موسى.'}
+      ],
+      lesson:'الأخوة في الدين والتعاون على الحق من أعظم أسباب النجاح في حمل الرسالة، وأداء الأمانة يبقى واجبًا ولو لم يستجب الناس.',
+      surahs:['طه','الشعراء','مريم']},
+
+    { id:'dhulkifl', order:16, name:'ذو الكفل عليه السلام', title:'الصابر على العهد', icon:'🤲', mentions:'2 ذكرًا',
+      stages:[
+        {title:'الوفاء بالكفالة', text:'ذُكر ذو الكفل في القرآن مقرونًا بإسماعيل واليسع من الصابرين، وقيل إنه تكفّل بأداء عمل شاق واستمر عليه وفاءً بوعده.'},
+        {title:'مكانته عند الله', text:'وصفه القرآن بأنه من الأخيار الذين أُدخلوا في رحمة الله لصبرهم وحسن التزامهم بما تعهدوا به.'}
+      ],
+      lesson:'الوفاء بالعهد والالتزام بما تعهّد به الإنسان، حتى في الأمور اليسيرة، من صفات الصالحين التي يثني الله عليها.',
+      surahs:['الأنبياء','ص']},
+
+    { id:'dawud', order:17, name:'داود عليه السلام', title:'خليفة الأرض وصاحب الزبور', icon:'🎵', mentions:'16 ذكرًا',
+      stages:[
+        {title:'الملك والزبور', text:'آتاه الله الملك والحكمة، وأنزل عليه الزبور، وسخّر معه الجبال والطير تسبّح، وألان له الحديد ليصنع منه دروعًا للحرب.'},
+        {title:'الحكم بين الخصمين', text:'جاءه خصمان يتحاكمان في قضية غنم، فحكم فيهما بسرعة قبل استماع كامل الحجتين، ثم أدرك الاختبار فاستغفر وأناب إلى الله متعلمًا التأني في الحكم.'}
+      ],
+      lesson:'حتى الأنبياء يخطئون في اجتهادهم البشري أحيانًا، لكن سرعة الرجوع إلى الله والاستغفار هي الفارق الجوهري الذي يرفع الدرجة.',
+      surahs:['البقرة','ص','سبأ']},
+
+    { id:'sulaiman', order:18, name:'سليمان عليه السلام', title:'الملك الذي سخّر له كل شيء', icon:'🐜', mentions:'17 ذكرًا',
+      stages:[
+        {title:'تسخير الريح والجن', text:'ورث سليمان الملك عن أبيه داود، وسخّر الله له الريح تجري بأمره، والجن يعملون بين يديه في البناء والغوص.'},
+        {title:'الهدهد وبلقيس', text:'أخبره الهدهد عن مملكة سبأ وملكتها بلقيس التي تسجد للشمس، فأرسل إليها كتابًا، ثم أحضر عرشها قبل أن يصلها بمعجزة، فأسلمت مع سليمان.'},
+        {title:'النملة والرحمة', text:'حين مرّ بواد النمل سمع نملة تحذر قومها منه، فتبسّم ضاحكًا من قولها، وحمد الله أن ألهمه شكر نعمته ورحمته حتى بأصغر المخلوقات.'}
+      ],
+      lesson:'النعمة العظيمة، مهما بلغت من الملك والتسخير، تستوجب شكرًا متجددًا وتواضعًا لله، لا غرورًا أو استعلاء على الخلق.',
+      surahs:['النمل','ص','الأنبياء','سبأ']},
+
+    { id:'ilyas', order:19, name:'إلياس عليه السلام', title:'محارب عبادة بعل', icon:'⛰️', mentions:'2 ذكرًا',
+      stages:[
+        {title:'مواجهة عبادة بعل', text:'بُعث إلياس في قوم انحرفوا لعبادة صنم يسمى بعل، فدعاهم إلى إخلاص العبادة لله رب العالمين وترك ما ابتدعوه.'},
+        {title:'الثبات رغم التكذيب', text:'كذّبه أكثر قومه إلا قلة، فثبت على الحق ولم يتنازل عن دعوته رغم صعوبة موقفه بينهم.'}
+      ],
+      lesson:'الثبات على التوحيد وسط مجتمع منحرف بأكمله يحتاج شجاعة نادرة، وهو ما يخلّد ذكر الداعية عند الله وإن قلّ أتباعه.',
+      surahs:['الأنعام','الصافات']},
+
+    { id:'alyasa', order:20, name:'اليسع عليه السلام', title:'خليفة إلياس في الدعوة', icon:'🌿', mentions:'2 ذكرًا',
+      stages:[
+        {title:'حمل الرسالة من بعده', text:'خلف اليسع نبي الله إلياس في دعوة قومه بعد أن أوصاه بحمل الأمانة، فاستمر على نهجه في الدعوة إلى التوحيد.'},
+        {title:'الذكر بين الأخيار', text:'ذكره القرآن مقترنًا بإسماعيل وذي الكفل ضمن الذين فُضّلوا على العالمين بصبرهم واستقامتهم.'}
+      ],
+      lesson:'استمرارية حمل الرسالة جيلًا بعد جيل هي سنة الأنبياء، وكل من أخذ الأمانة بعد سابقه فأداها كان له مثل أجر من حمل قبله.',
+      surahs:['الأنعام','ص']},
+
+    { id:'yunus', order:21, name:'يونس عليه السلام', title:'صاحب الحوت وذو النون', icon:'🐋', mentions:'4 ذكرًا',
+      stages:[
+        {title:'الغضب والمغادرة', text:'غضب يونس من قومه حين استمروا في تكذيبه، فغادرهم قبل أن يأذن الله له بذلك، وركب سفينة هربًا منهم.'},
+        {title:'بطن الحوت', text:'اقترع أهل السفينة لإلقاء أحدهم بسبب ثقلها، فوقعت القرعة عليه، فابتلعه حوت عظيم وهو داخل في الظلمات: ظلمة الليل والبحر وبطن الحوت.'},
+        {title:'دعاء الفرج', text:'نادى ربه في تلك الظلمات: لا إله إلا أنت سبحانك إني كنت من الظالمين، فاستجاب الله له ونجاه ونبذه بالعراء وقد أنبت الله عليه شجرة من يقطين.'}
+      ],
+      lesson:'الاعتراف بالخطأ والتضرع الصادق لله في أحلك الظروف يفتح أبواب الفرج مهما بدا الموقف مغلقًا مستحيلًا.',
+      surahs:['الأنبياء','الصافات','يونس','القلم']},
+
+    { id:'zakariya', order:22, name:'زكريا عليه السلام', title:'كافل مريم', icon:'🙏', mentions:'7 ذكرًا',
+      stages:[
+        {title:'كفالة مريم', text:'تكفّل زكريا بتربية مريم في المحراب، فكان كلما دخل عليها وجد عندها رزقًا من عند الله، فسألها عن مصدره فأخبرته أنه من الله وحده.'},
+        {title:'دعاء الولد', text:'رقّ قلبه لرؤية فضل الله على مريم، فدعا ربه أن يرزقه ولدًا يرثه من بعده رغم كبر سنّه وعقم زوجته، فاستجاب الله دعاءه.'}
+      ],
+      lesson:'مشاهدة رزق الله لعباده الصالحين تُلهم القلب المؤمن حسن الظن بالله والدعاء بثقة، مهما بدت الأسباب المادية بعيدة.',
+      surahs:['آل عمران','مريم','الأنبياء']},
+
+    { id:'yahya', order:23, name:'يحيى عليه السلام', title:'النبي الحكيم صبيًا', icon:'📖', mentions:'5 ذكرات',
+      stages:[
+        {title:'ولادة استجابة الدعاء', text:'وُلد يحيى استجابة لدعاء أبيه زكريا، وبشّره الله باسمه قبل أن يولد، وكان اسمًا لم يُسمَّ به أحد من قبله.'},
+        {title:'الحكمة صبيًا', text:'آتاه الله الحكم والفهم وهو صغير، وأمره بأخذ الكتاب بقوة وجدّ، ووصفه بالحنان والزكاة والبر بوالديه.'}
+      ],
+      lesson:'الفضل من الله لا يتقيّد بالسنّ، فقد آتى الله يحيى الحكمة صبيًا، تعليمًا أن النضج في الدين لا يُقاس بالعمر وحده.',
+      surahs:['آل عمران','مريم','الأنعام']},
+
+    { id:'isa', order:24, name:'عيسى عليه السلام', title:'المسيح ابن مريم', icon:'✨', mentions:'25 ذكرًا',
+      stages:[
+        {title:'الولادة المعجزة', text:'بشّرت الملائكة مريم بكلمة من الله اسمها المسيح عيسى ابن مريم من غير أب، فحملته واعتزلت قومها حتى وضعته.'},
+        {title:'الكلام في المهد', text:'حين جاءت به قومها اتهموها، فأشارت إليه، فتكلم وهو رضيع في المهد يبرئ أمه ويعلن أنه عبد الله آتاه الكتاب وجعله نبيًا.'},
+        {title:'المعجزات والدعوة', text:'أيّده الله بمعجزات كإحياء الطير من الطين بإذن الله، وإبراء الأكمه والأبرص، وإحياء الموتى بإذن الله، داعيًا بني إسرائيل إلى التوحيد.'},
+        {title:'الرفع إلى السماء', text:'حين أراد أعداؤه قتله وصلبه، رفعه الله إليه ولم يُقتل ولم يُصلب، بل شُبّه لهم، وسينزل في آخر الزمان كما أخبر النبي ﷺ.'}
+      ],
+      lesson:'قدرة الله لا تحدها الأسباب المعتادة، من ولادة بلا أب إلى كلام في المهد؛ وعيسى عبد الله ورسوله، بريء مما نُسب إليه من الألوهية.',
+      surahs:['آل عمران','مريم','المائدة','النساء']},
+
+    { id:'muhammad', order:25, name:'محمد ﷺ', title:'خاتم الأنبياء والمرسلين', icon:'🕋', mentions:'4 ذكرات صريحة',
+      stages:[
+        {title:'البعثة والوحي', text:'نزل عليه الوحي في غار حراء وهو ابن أربعين سنة، فبدأ يدعو سرًا ثم جهرًا إلى توحيد الله، فآذاه قومه في مكة وقاطعوه هو وأصحابه.'},
+        {title:'الهجرة إلى المدينة', text:'أذن الله له بالهجرة إلى المدينة بعد ثلاث عشرة سنة من الدعوة بمكة، فأسس فيها أول مجتمع مسلم، وآخى بين المهاجرين والأنصار.'},
+        {title:'الرسالة الخاتمة', text:'أكمل الله به الدين وأتم النعمة، فجاءت رسالته للناس كافة إلى قيام الساعة، خاتمًا للأنبياء والرسل جميعًا لا نبي بعده.'},
+        {title:'الخُلق العظيم', text:'كان ﷺ أرحم الناس وأصدقهم وأوفاهم بالعهد، يعامل الصغير والكبير بالرفق، ووصفه ربه في كتابه بأنه على خلق عظيم قدوة للعالمين.'}
+      ],
+      lesson:'رسالة محمد ﷺ جاءت خاتمة وشاملة للبشرية جمعاء، وسيرته العملية في الصدق والرحمة والوفاء أصل يُقتدى به في كل زمان ومكان.',
+      surahs:['آل عمران','الأحزاب','الفتح','محمد']}
+  ];
+
+  const PROPHET_MAP = Object.fromEntries(PROPHETS.map(p=>[p.id,p]));
+
+  const el = id => document.getElementById(id);
+  const toast = el('toast');
+  function showToast(msg){ toast.textContent = msg; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 2400); }
+
+  const state = { fontSize:17, theme:'night', voiceRate:95, read:{}, activeTab:'library', searchQuery:'', currentId:null };
+
+  /* ---------------- Persistence ---------------- */
+  function loadPrefs(){
+    try{ Object.assign(state, JSON.parse(localStorage.getItem('prophets_prefs')||'{}')); }catch(e){}
+    try{ state.read = JSON.parse(localStorage.getItem('prophets_read')||'{}'); }catch(e){ state.read = {}; }
+  }
+  function savePrefs(){
+    localStorage.setItem('prophets_prefs', JSON.stringify({fontSize:state.fontSize, theme:state.theme, voiceRate:state.voiceRate}));
+  }
+  function saveRead(){ localStorage.setItem('prophets_read', JSON.stringify(state.read)); }
+
+  function applyPrefs(){
+    document.documentElement.style.setProperty('--arfs', state.fontSize+'px');
+    document.body.classList.toggle('theme-paper', state.theme==='paper');
+    el('fontSize').value = state.fontSize;
+    el('voiceRate').value = state.voiceRate;
+    document.querySelectorAll('.theme-sw').forEach(s=> s.classList.toggle('active', s.dataset.theme===state.theme));
+  }
+
+  function orderNum(n){
+    const map = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    return String(n).replace(/[0-9]/g, d=>map[d]);
+  }
+
+  /* ---------------- Progress ---------------- */
+  function updateProgress(){
+    const doneCount = Object.values(state.read).filter(Boolean).length;
+    el('progressText').textContent = `${orderNum(doneCount)} من ٢٥`;
+    el('progressFill').style.width = Math.round((doneCount/25)*100)+'%';
+  }
+
+  /* ---------------- Filtering ---------------- */
+  function filteredProphets(){
+    const q = state.searchQuery.trim();
+    if(!q) return PROPHETS;
+    return PROPHETS.filter(p=> p.name.includes(q) || p.title.includes(q));
+  }
+
+  /* ---------------- Library grid ---------------- */
+  function renderLibrary(){
+    const list = filteredProphets();
+    el('libraryEmpty').style.display = list.length ? 'none' : 'block';
+    el('libraryGrid').innerHTML = list.map(p=>{
+      const done = !!state.read[p.id];
+      return `<div class="prophet-card" data-id="${p.id}">
+        <div class="ring ${done?'done':''}"></div>
+        <div class="icon">${p.icon}</div>
+        <div class="name">${p.name}</div>
+        <div class="title">${p.title}</div>
+      </div>`;
+    }).join('');
+    el('libraryGrid').querySelectorAll('.prophet-card').forEach(c=>{
+      c.addEventListener('click', ()=> openDetail(c.dataset.id));
+    });
+  }
+
+  /* ---------------- Timeline (signature element) ---------------- */
+  function renderTimeline(){
+    const list = filteredProphets();
+    el('timelineEmpty').style.display = list.length ? 'none' : 'block';
+    el('timelineList').innerHTML = list.map(p=>{
+      const done = !!state.read[p.id];
+      return `<div class="tl-item" data-id="${p.id}">
+        <div class="tl-node ${done?'done':''}">${orderNum(p.order)}</div>
+        <div class="tl-card">
+          <div class="icon">${p.icon}</div>
+          <div class="txt"><div class="name">${p.name}</div><div class="title">${p.title}</div></div>
+        </div>
+      </div>`;
+    }).join('');
+    el('timelineList').querySelectorAll('.tl-item').forEach(c=>{
+      c.addEventListener('click', ()=> openDetail(c.dataset.id));
+    });
+  }
+
+  function renderCurrentTab(){
+    if(state.activeTab==='library') renderLibrary(); else renderTimeline();
+  }
+
+  /* ---------------- Tabs ---------------- */
+  document.querySelectorAll('.tabs button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      state.activeTab = b.dataset.tab;
+      document.querySelectorAll('.tabs button').forEach(x=> x.classList.toggle('active', x===b));
+      document.querySelectorAll('.panel').forEach(p=> p.classList.toggle('active', p.id==='panel-'+b.dataset.tab));
+      renderCurrentTab();
+    });
+  });
+
+  el('searchBox').addEventListener('input', e=>{
+    state.searchQuery = e.target.value;
+    renderCurrentTab();
+  });
+
+  /* ---------------- Detail view ---------------- */
+  let currentUtterance = null;
+
+  function openDetail(id){
+    const p = PROPHET_MAP[id];
+    if(!p) return;
+    state.currentId = id;
+    stopNarration();
+
+    el('libraryGrid').closest('.panel') && document.querySelectorAll('.panel').forEach(pn=> pn.classList.remove('active'));
+    el('detailView').style.display = 'block';
+    el('crumbName').textContent = p.name;
+
+    el('dIcon').textContent = p.icon;
+    el('dName').textContent = p.name;
+    el('dTitle').textContent = p.title;
+    el('dOrder').textContent = `الترتيب: ${orderNum(p.order)} من ٢٥`;
+    el('dMentions').textContent = `ورد ذكره: ${p.mentions}`;
+
+    el('stagesList').innerHTML = p.stages.map((s,i)=>`
+      <div class="stage-card">
+        <div class="stage-num">${orderNum(i+1)}</div>
+        <div class="stage-title">${s.title}</div>
+        <div class="stage-text">${s.text}</div>
+      </div>`).join('');
+
+    el('dLesson').textContent = p.lesson;
+    el('dSurahs').innerHTML = p.surahs.map(s=>`<span class="surah-chip">📖 سورة ${s}</span>`).join('');
+
+    const done = !!state.read[p.id];
+    el('doneBtn').textContent = done ? '★ مُعلَّمة كمقروءة' : '☆ وضع علامة "قرأتها"';
+    el('doneBtn').classList.toggle('secondary', !done);
+
+    const idx = PROPHETS.findIndex(x=>x.id===id);
+    el('prevProphet').disabled = idx<=0;
+    el('nextProphet').disabled = idx>=PROPHETS.length-1;
+
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function closeDetail(){
+    stopNarration();
+    el('detailView').style.display = 'none';
+    document.querySelectorAll('.panel').forEach(p=> p.classList.toggle('active', p.id==='panel-'+state.activeTab));
+    renderCurrentTab();
+  }
+  el('backBtn').addEventListener('click', closeDetail);
+
+  el('doneBtn').addEventListener('click', ()=>{
+    const id = state.currentId;
+    state.read[id] = !state.read[id];
+    saveRead(); updateProgress();
+    const done = !!state.read[id];
+    el('doneBtn').textContent = done ? '★ مُعلَّمة كمقروءة' : '☆ وضع علامة "قرأتها"';
+    el('doneBtn').classList.toggle('secondary', !done);
+    showToast(done ? 'أُضيفت إلى قصصك المقروءة' : 'أُزيلت من قصصك المقروءة');
+  });
+
+  el('shareBtn').addEventListener('click', async ()=>{
+    const p = PROPHET_MAP[state.currentId];
+    if(!p) return;
+    const text = `قصة ${p.name} — ${p.title}\n\n${p.lesson}\n\n(من تطبيق قصص الأنبياء)`;
+    try{
+      if(navigator.share){ await navigator.share({text}); return; }
+    }catch(e){}
+    try{ await navigator.clipboard.writeText(text); showToast('تم نسخ ملخص القصة'); }
+    catch(e){ showToast('تعذّر النسخ التلقائي'); }
+  });
+
+  el('prevProphet').addEventListener('click', ()=>{
+    const idx = PROPHETS.findIndex(x=>x.id===state.currentId);
+    if(idx>0) openDetail(PROPHETS[idx-1].id);
+  });
+  el('nextProphet').addEventListener('click', ()=>{
+    const idx = PROPHETS.findIndex(x=>x.id===state.currentId);
+    if(idx<PROPHETS.length-1) openDetail(PROPHETS[idx+1].id);
+  });
+
+  /* ---------------- Narration (Web Speech API) ---------------- */
+  function stopNarration(){
+    if('speechSynthesis' in window) speechSynthesis.cancel();
+    el('listenBtn').textContent = '🔊 استماع للقصة';
+    el('listenBtn').classList.remove('playing');
+  }
+  el('listenBtn').addEventListener('click', ()=>{
+    if(!('speechSynthesis' in window)){ showToast('المتصفح لا يدعم الاستماع الصوتي'); return; }
+    if(speechSynthesis.speaking){ stopNarration(); return; }
+    const p = PROPHET_MAP[state.currentId];
+    if(!p) return;
+    const fullText = `${p.name}. ${p.title}. ` + p.stages.map(s=> s.title + '. ' + s.text).join(' ') + ' العبرة: ' + p.lesson;
+    const utter = new SpeechSynthesisUtterance(fullText);
+    utter.lang = 'ar-SA';
+    utter.rate = state.voiceRate/100;
+    const voices = speechSynthesis.getVoices();
+    const arVoice = voices.find(v=> v.lang && v.lang.startsWith('ar'));
+    if(arVoice) utter.voice = arVoice;
+    utter.onend = stopNarration;
+    utter.onerror = stopNarration;
+    currentUtterance = utter;
+    speechSynthesis.speak(utter);
+    el('listenBtn').textContent = '⏸ إيقاف الاستماع';
+    el('listenBtn').classList.add('playing');
+  });
+  if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged = ()=>{}; }
+
+  /* ---------------- Settings drawer ---------------- */
+  const drawer = el('drawer'), overlay = el('drawerOverlay');
+  el('settingsBtn').addEventListener('click', ()=>{ drawer.classList.add('open'); overlay.classList.add('open'); });
+  el('closeDrawer').addEventListener('click', ()=>{ drawer.classList.remove('open'); overlay.classList.remove('open'); });
+  overlay.addEventListener('click', ()=>{ drawer.classList.remove('open'); overlay.classList.remove('open'); });
+  el('fontSize').addEventListener('input', e=>{ state.fontSize = +e.target.value; applyPrefs(); savePrefs(); });
+  el('voiceRate').addEventListener('input', e=>{ state.voiceRate = +e.target.value; savePrefs(); });
+  document.querySelectorAll('.theme-sw').forEach(s=>{
+    s.addEventListener('click', ()=>{ state.theme = s.dataset.theme; applyPrefs(); savePrefs(); });
+  });
+  el('resetProgressBtn').addEventListener('click', ()=>{
+    state.read = {}; saveRead(); updateProgress(); renderCurrentTab();
+    if(el('detailView').style.display !== 'none'){
+      const done = false;
+      el('doneBtn').textContent = '☆ وضع علامة "قرأتها"';
+      el('doneBtn').classList.add('secondary');
+    }
+    showToast('تم مسح كل علامات القراءة');
+  });
+
+  /* ---------------- Init ---------------- */
+  loadPrefs();
+  applyPrefs();
+  updateProgress();
+  renderLibrary();
+})();
+</script>
+</body>
+</html>

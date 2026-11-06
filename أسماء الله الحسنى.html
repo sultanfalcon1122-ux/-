@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>أسماء الله الحسنى</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#080d1a; --night-2:#0f1c33;
+    --gold:#c9a24b; --gold-2:#f0d38a; --gold-deep:#8a6a26; --gold-soft:#e8caa0;
+    --emerald:#1f5f5b; --emerald-soft:#4c9a8f;
+    --ink:#f3f0e6; --ink-dim:#9fb0c7;
+    --line:rgba(201,162,75,0.28); --line-soft:rgba(201,162,75,0.14);
+    --done:#3f9d78;
+    --arfs:17px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; min-height:100%;}
+  body{
+    background:
+      radial-gradient(1000px 500px at 50% -8%, #16233f 0%, transparent 62%),
+      radial-gradient(800px 500px at 100% 100%, rgba(31,95,91,0.16) 0%, transparent 60%),
+      linear-gradient(180deg, var(--night) 0%, #05080f 100%);
+    background-attachment:fixed;
+    color:var(--ink); font-family:'Tajawal',sans-serif; overflow-x:hidden;
+  }
+  body.theme-paper{
+    background: linear-gradient(180deg,#F8F3E7,#EDE3CE); color:#2B2015;
+    --ink:#2B2015; --ink-dim:#6b5a42; --line:rgba(169,119,47,0.28); --line-soft:rgba(169,119,47,0.12);
+    --gold:#A9772F; --gold-2:#7c5620; --gold-soft:#8a5a2b; --emerald:#2f6b62; --emerald-soft:#4c8b7f;
+  }
+
+  .bg-motif{
+    position:fixed; inset:0; z-index:0; opacity:0.13; pointer-events:none;
+    background-image:
+      radial-gradient(circle at 0 0, transparent 9px, var(--gold) 9.6px, transparent 10.2px),
+      radial-gradient(circle at 60px 0, transparent 9px, var(--gold) 9.6px, transparent 10.2px),
+      radial-gradient(circle at 30px 52px, transparent 9px, var(--gold) 9.6px, transparent 10.2px);
+    background-size:60px 104px;
+    -webkit-mask-image:radial-gradient(1000px 800px at 50% 8%, #000 0%, transparent 76%);
+    mask-image:radial-gradient(1000px 800px at 50% 8%, #000 0%, transparent 76%);
+  }
+  .frieze{
+    position:relative; z-index:1; height:10px; margin:0 auto; max-width:560px;
+    background-image:repeating-linear-gradient(135deg, transparent 0 6px, var(--gold) 6px 7px, transparent 7px 12px),
+                      repeating-linear-gradient(45deg, transparent 0 6px, var(--gold) 6px 7px, transparent 7px 12px);
+    opacity:.5;
+  }
+  .wrap{position:relative; z-index:1; max-width:560px; margin:0 auto; padding:20px 16px 90px;}
+
+  header{text-align:center; margin-bottom:16px;}
+  header .eyebrow{font-size:11px; letter-spacing:4px; color:var(--gold-soft); text-transform:uppercase;}
+  header .divider{display:flex; align-items:center; justify-content:center; gap:8px; margin:6px 0;}
+  header .divider .ln{height:1px; width:36px; background:linear-gradient(90deg, transparent, var(--gold), transparent);}
+  header h1{
+    font-family:'Amiri', serif; font-weight:700; font-size:29px; margin:2px 0 4px;
+    background:linear-gradient(180deg, var(--gold-2), var(--gold-deep));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  header .sub{font-size:12px; color:var(--ink-dim);}
+
+  .progress-wrap{ margin:16px 0 18px; }
+  .progress-label{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--ink-dim); margin-bottom:6px; }
+  .progress-track{ height:7px; border-radius:6px; background:rgba(255,255,255,0.06); overflow:hidden; }
+  body.theme-paper .progress-track{ background:rgba(0,0,0,0.06); }
+  .progress-fill{ height:100%; background:linear-gradient(90deg,var(--gold-deep),var(--gold)); border-radius:6px; transition:width .4s ease; }
+
+  .tabs{
+    display:flex; gap:6px; background:linear-gradient(180deg, #101d34, #0b1526);
+    border:1px solid var(--line); border-radius:16px; padding:5px; margin-bottom:16px;
+  }
+  body.theme-paper .tabs{ background:linear-gradient(180deg,#F0E8D4,#E6DAB9); }
+  .tabs button{
+    flex:1; padding:11px 6px; border:none; border-radius:12px; background:transparent;
+    color:var(--ink-dim); font-family:'Tajawal'; font-weight:700; font-size:12.5px; cursor:pointer;
+  }
+  .tabs button.active{
+    background:linear-gradient(180deg, rgba(201,162,75,0.22), rgba(201,162,75,0.06));
+    color:var(--gold-2); box-shadow:inset 0 0 0 1px var(--line);
+  }
+
+  input[type="search"]{
+    width:100%; padding:11px 14px; border-radius:12px; border:1px solid var(--line);
+    background:rgba(255,255,255,0.03); color:var(--ink); font-family:'Tajawal'; font-size:14px; margin-bottom:16px;
+  }
+  body.theme-paper input[type="search"]{ background:rgba(0,0,0,0.02); }
+
+  .panel{display:none;} .panel.active{display:block; animation:fadeIn .3s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  /* ---- names grid ---- */
+  .names-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .name-card{
+    border:1px solid var(--line); border-radius:16px; padding:16px 10px; cursor:pointer; position:relative; overflow:hidden;
+    background:rgba(255,255,255,0.02); text-align:center;
+  }
+  .name-card .ring{ position:absolute; top:9px; left:9px; width:8px; height:8px; border-radius:50%; background:var(--line); }
+  .name-card .ring.done{ background:var(--done); }
+  .name-card .ord{ position:absolute; top:8px; right:10px; font-size:10px; color:var(--ink-dim); }
+  .name-card .name{font-family:'Amiri',serif; font-size:19px; color:var(--gold-2); margin-top:8px;}
+  .name-card .meaning{font-size:10.5px; color:var(--ink-dim); margin-top:3px;}
+
+  .empty-state{ text-align:center; padding:50px 20px; color:var(--ink-dim); font-size:13px; }
+
+  /* ---- Tasbih / rosary (signature element) ---- */
+  .tasbih-wrap{ display:flex; flex-direction:column; align-items:center; padding:6px 0 10px; }
+  .bead-display{
+    width:230px; height:230px; border-radius:50%; position:relative; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 50% 40%, #16233f, #080d1a 72%);
+    border:2px solid var(--line); box-shadow:0 0 0 1px rgba(201,162,75,0.10), 0 20px 50px rgba(0,0,0,0.5);
+    cursor:pointer; margin-bottom:16px;
+  }
+  body.theme-paper .bead-display{ background:radial-gradient(circle at 50% 40%, #f4ead0, #e9dcb8 72%); }
+  .bead-display svg{ position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); }
+  .bead-display .center{ position:relative; z-index:2; text-align:center; padding:0 20px; }
+  .bead-display .b-name{ font-family:'Amiri',serif; font-size:30px; color:var(--gold-2); line-height:1.3; }
+  .bead-display .b-ord{ font-size:12px; color:var(--ink-dim); margin-top:8px; }
+  .bead-nav{ display:flex; gap:14px; align-items:center; margin-bottom:16px; }
+  .bead-nav-btn{
+    width:46px; height:46px; border-radius:50%; border:1px solid var(--line); background:rgba(255,255,255,0.02);
+    color:var(--gold-soft); font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .bead-meaning-card{
+    border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:14px; width:100%;
+    background:rgba(255,255,255,0.015); text-align:center;
+  }
+  .bead-meaning-card .m{ font-family:'Amiri',serif; font-size:16px; color:var(--gold-soft); margin-bottom:6px; }
+  .bead-meaning-card .e{ font-size:13.5px; line-height:1.75; color:var(--ink-dim); }
+  .tasbih-actions{ display:flex; gap:10px; width:100%; }
+  .btn{
+    background:linear-gradient(180deg,var(--gold-2),var(--gold-deep)); color:#1a1200; border:none;
+    padding:11px 18px; border-radius:14px; font-family:'Tajawal'; font-weight:700; font-size:13px; cursor:pointer; flex:1;
+  }
+  .btn.secondary{ background:transparent; border:1px solid var(--line); color:var(--gold-soft); }
+  .btn.playing{ background:linear-gradient(180deg,var(--emerald-soft),var(--emerald)); color:#fff; }
+
+  /* ---- detail view ---- */
+  .crumb{ display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:12px; color:var(--ink-dim); margin-bottom:14px; }
+  .crumb button{ background:none; border:none; color:var(--gold-soft); font-family:inherit; font-size:12px; cursor:pointer; padding:0; }
+
+  .detail-head{
+    border:1px solid var(--line); border-radius:20px; padding:26px 18px; margin-bottom:18px; position:relative; text-align:center;
+    background:linear-gradient(160deg, rgba(201,162,75,0.14), rgba(31,95,91,0.10));
+    box-shadow:inset 0 0 0 1px rgba(201,162,75,0.10), 0 10px 30px rgba(0,0,0,0.35);
+  }
+  .detail-head::before, .detail-head::after{ content:''; position:absolute; width:14px; height:14px; border:var(--gold) solid; opacity:.55; }
+  .detail-head::before{ top:8px; inset-inline-start:8px; border-width:1.5px 0 0 1.5px; }
+  .detail-head::after{ top:8px; inset-inline-end:8px; border-width:1.5px 1.5px 0 0; }
+  .detail-head .ord{ font-size:11px; color:var(--ink-dim); letter-spacing:2px; }
+  .detail-head .name{ font-family:'Amiri',serif; font-size:38px; margin:8px 0 4px; color:var(--gold-2); }
+  .detail-head .meaning{ font-size:14px; color:var(--gold-soft); }
+  .detail-actions{ display:flex; gap:8px; margin-top:16px; justify-content:center; flex-wrap:wrap; }
+
+  h3.section-title{font-family:'Amiri',serif; font-size:15px; color:var(--gold-2); margin:20px 0 10px;}
+
+  .info-card{
+    border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:12px;
+    background:rgba(255,255,255,0.015);
+  }
+  .info-card .txt{ font-size:var(--arfs); line-height:1.85; text-align:justify; }
+
+  .reflect-box{
+    border:1px solid var(--line); border-radius:16px; padding:16px; margin:14px 0; position:relative;
+    background:linear-gradient(160deg, rgba(31,95,91,0.14), rgba(201,162,75,0.06));
+    border-inline-start:3px solid var(--emerald-soft);
+  }
+  .reflect-box .lbl{ font-size:11px; color:var(--emerald-soft); letter-spacing:1.5px; margin-bottom:6px; }
+  .reflect-box .txt{ font-size:14px; line-height:1.8; }
+
+  .nav-buttons{display:flex; justify-content:space-between; gap:10px; margin-top:22px;}
+  .nav-buttons button{
+    flex:1; padding:12px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,0.02); color:var(--ink);
+    font-family:'Tajawal'; font-size:12.5px; cursor:pointer;
+  }
+  .nav-buttons button:disabled{opacity:.35; cursor:default;}
+
+  /* ---- quiz ---- */
+  .quiz-card{
+    border:1px solid var(--line); border-radius:20px; padding:24px 18px; text-align:center;
+    background:linear-gradient(160deg, rgba(201,162,75,0.10), rgba(31,95,91,0.08));
+  }
+  .quiz-card .q-lbl{ font-size:11.5px; color:var(--ink-dim); letter-spacing:1.5px; margin-bottom:10px; }
+  .quiz-card .q-main{ font-family:'Amiri',serif; font-size:20px; line-height:1.7; margin-bottom:6px; }
+  .quiz-options{ display:flex; flex-direction:column; gap:10px; margin-top:18px; }
+  .quiz-opt{
+    padding:13px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,0.02); color:var(--ink);
+    font-family:'Amiri',serif; font-size:16px; cursor:pointer;
+  }
+  .quiz-opt.correct{ background:rgba(63,157,120,0.18); border-color:var(--done); color:var(--done); }
+  .quiz-opt.wrong{ background:rgba(192,86,63,0.16); border-color:#c0563f; color:#e8b98a; }
+  .quiz-score{ display:flex; justify-content:center; gap:20px; margin-top:16px; font-size:12.5px; color:var(--ink-dim); }
+  .quiz-score b{ color:var(--gold-2); font-size:16px; }
+
+  .fab{
+    position:fixed; bottom:22px; left:16px; z-index:26; width:48px; height:48px; border-radius:50%;
+    background:var(--gold); color:#1a1200; display:flex; align-items:center; justify-content:center; font-size:19px;
+    box-shadow:0 4px 16px rgba(0,0,0,0.4); border:none; cursor:pointer;
+  }
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%); background:var(--night-2); border:1px solid var(--line);
+    padding:10px 16px; border-radius:10px; font-size:13px; box-shadow:0 6px 18px rgba(0,0,0,.4); z-index:50;
+    opacity:0; transition:opacity .25s ease; pointer-events:none; max-width:88vw; text-align:center; color:var(--ink);
+  }
+  .toast.show{opacity:1;}
+  body.theme-paper .toast{ background:#F3EBD8; }
+
+  .drawer-overlay{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:29; opacity:0; pointer-events:none; transition:opacity .25s ease;}
+  .drawer-overlay.open{opacity:1; pointer-events:auto;}
+  .drawer{
+    position:fixed; top:0; bottom:0; right:0; width:min(320px,88vw); background:var(--night-2); z-index:30;
+    transform:translateX(100%); transition:transform .3s cubic-bezier(.4,0,.2,1); overflow-y:auto;
+    border-left:1px solid var(--line); padding:16px;
+  }
+  body.theme-paper .drawer{ background:#F3EBD8; }
+  .drawer.open{transform:translateX(0);}
+  .drawer-header{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .drawer-header h2{font-family:'Amiri',serif; font-size:16px; margin:0; color:var(--gold-2);}
+  .close-btn{background:rgba(255,255,255,0.05); border:1px solid var(--line); border-radius:8px; width:32px; height:32px; cursor:pointer; color:var(--ink);}
+  .drawer h3{font-family:'Amiri',serif; font-size:13px; margin:16px 0 8px; color:var(--gold-2);}
+  .drawer h3:first-of-type{margin-top:0;}
+  .slider-row{display:flex; align-items:center; gap:10px;}
+  input[type="range"]{flex:1; accent-color:var(--gold);}
+  .theme-row{display:flex; gap:10px;}
+  .theme-sw{ flex:1; height:44px; border-radius:12px; border:2px solid var(--line); cursor:pointer; position:relative; }
+  .theme-sw.active{border-color:var(--gold);}
+  .theme-sw span{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.5);}
+  .option-row{display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--line-soft); gap:10px; font-size:13px;}
+  .option-row.no-border{border-bottom:none;}
+
+  footer{text-align:center; margin-top:26px; font-size:11px; color:var(--ink-dim); line-height:1.8;}
+</style>
+</head>
+<body>
+<div class="bg-motif"></div>
+<div class="frieze"></div>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى</div>
+    <div class="divider"><span class="ln"></span>
+      <svg viewBox="0 0 24 24" width="14" fill="#c9a24b"><path d="M12 0l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 15.2l-6.2 4.5 2.4-7.6L2 7.6h7.6z"></path></svg>
+    <span class="ln"></span></div>
+    <h1>أسماء الله الحسنى</h1>
+    <div class="sub">٩٩ اسمًا · فادعوه بها · حفظ ومسبحة واختبار</div>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>تقدّمك في الحفظ</span><span id="progressText">٠ من ٩٩</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+  </div>
+
+  <nav class="tabs">
+    <button class="active" data-tab="grid">الأسماء</button>
+    <button data-tab="tasbih">المسبحة</button>
+    <button data-tab="quiz">اختبار</button>
+  </nav>
+
+  <input type="search" id="searchBox" placeholder="ابحث باسم أو معنى">
+
+  <!-- GRID -->
+  <section class="panel active" id="panel-grid">
+    <div class="names-grid" id="namesGrid"></div>
+    <div class="empty-state" id="gridEmpty" style="display:none;">لا يوجد اسم مطابق لبحثك.</div>
+  </section>
+
+  <!-- TASBIH -->
+  <section class="panel" id="panel-tasbih">
+    <div class="tasbih-wrap">
+      <div class="bead-display" id="beadDisplay">
+        <svg viewBox="0 0 230 230">
+          <circle cx="115" cy="115" r="104" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"></circle>
+          <circle id="beadRing" cx="115" cy="115" r="104" fill="none" stroke="#c9a24b" stroke-width="8" stroke-linecap="round" stroke-dasharray="653.4" stroke-dashoffset="653.4"></circle>
+        </svg>
+        <div class="center">
+          <div class="b-name" id="beadName">الله</div>
+          <div class="b-ord" id="beadOrd">١ من ٩٩</div>
+        </div>
+      </div>
+      <div class="bead-nav">
+        <button class="bead-nav-btn" id="beadPrev">→</button>
+        <button class="bead-nav-btn" id="beadListen">🔊</button>
+        <button class="bead-nav-btn" id="beadNext">←</button>
+      </div>
+      <div class="bead-meaning-card">
+        <div class="m" id="beadMeaning">المألوه المعبود</div>
+        <div class="e" id="beadExplain"></div>
+      </div>
+      <div class="tasbih-actions">
+        <button class="btn secondary" id="beadMarkBtn">☆ وضع علامة "حفظتها"</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="panel" id="panel-quiz">
+    <div class="quiz-card">
+      <div class="q-lbl" id="quizLabel">ما هذا الاسم؟</div>
+      <div class="q-main" id="quizQuestion">...</div>
+      <div class="quiz-options" id="quizOptions"></div>
+    </div>
+    <div class="quiz-score">
+      <span>صحيح: <b id="quizCorrect">0</b></span>
+      <span>خطأ: <b id="quizWrong">0</b></span>
+    </div>
+  </section>
+
+  <!-- DETAIL -->
+  <section id="detailView" style="display:none;">
+    <div class="crumb"><button id="backBtn">← الأسماء</button><span id="crumbName"></span></div>
+
+    <div class="detail-head">
+      <div class="ord" id="dOrd"></div>
+      <div class="name" id="dName"></div>
+      <div class="meaning" id="dMeaning"></div>
+      <div class="detail-actions">
+        <button class="btn" id="listenBtn">🔊 استماع</button>
+        <button class="btn secondary" id="markBtn">☆ وضع علامة "حفظتها"</button>
+        <button class="btn secondary" id="shareBtn">📤 مشاركة</button>
+      </div>
+    </div>
+
+    <h3 class="section-title">شرح الاسم</h3>
+    <div class="info-card"><div class="txt" id="dExplain"></div></div>
+
+    <div class="reflect-box">
+      <div class="lbl">كيف تدعو الله به</div>
+      <div class="txt" id="dInvoke"></div>
+    </div>
+
+    <div class="nav-buttons">
+      <button id="prevName">→ الاسم السابق</button>
+      <button id="nextName">الاسم التالي ←</button>
+    </div>
+  </section>
+
+  <footer>
+    ورد في الحديث: «إنَّ لله تسعة وتسعين اسمًا، مائةً إلا واحدًا، من أحصاها دخل الجنة» (رواه البخاري ومسلم).<br>
+    يُحفظ تقدّمك في الحفظ على هذا الجهاز فقط.
+  </footer>
+</div>
+
+<button class="fab" id="settingsBtn" title="الإعدادات">⚙️</button>
+<div class="toast" id="toast"></div>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header"><h2>الإعدادات</h2><button class="close-btn" id="closeDrawer">✕</button></div>
+  <h3>المظهر</h3>
+  <div class="theme-row">
+    <div class="theme-sw active" data-theme="night" style="background:#0d1526;"><span>ليلي</span></div>
+    <div class="theme-sw" data-theme="paper" style="background:#EDE3CE;"><span style="color:#2B2015; text-shadow:none;">ورقي</span></div>
+  </div>
+  <h3>حجم الخط</h3>
+  <div class="slider-row"><span style="font-size:12px;">أ</span><input type="range" id="fontSize" min="14" max="26" value="17"><span style="font-size:20px;">أ</span></div>
+  <h3>سرعة الاستماع</h3>
+  <div class="slider-row"><span style="font-size:11px;">بطيء</span><input type="range" id="voiceRate" min="60" max="140" value="85"><span style="font-size:11px;">سريع</span></div>
+  <h3>الاهتزاز عند التنقل</h3>
+  <div class="option-row" style="border:none;"><span>اهتزاز عند كل اسم في المسبحة</span><div class="toggle" id="vibrateSwitch" style="width:42px; height:23px; border-radius:14px; background:rgba(255,255,255,0.06); border:1px solid var(--line); position:relative; cursor:pointer; flex-shrink:0;"><div style="position:absolute; top:2px; right:2px; width:17px; height:17px; border-radius:50%; background:#fff; transition:transform .2s ease;" id="vibrateKnob"></div></div></div>
+  <h3>التقدّم</h3>
+  <div class="option-row no-border"><span>مسح كل علامات الحفظ</span><button class="btn secondary" id="resetProgressBtn" style="padding:8px 14px; font-size:12px; flex:none;">مسح</button></div>
+</div>
+
+<script>
+(function(){
+  /* ---------------- Data: the 99 names ---------------- */
+  const NAMES = [
+    {n:'الله', m:'الاسم الجامع لكل معاني الألوهية', e:'الاسم الأعظم الذي يجمع كل صفات الكمال، ولا يُسمى به غيره سبحانه، وإليه ترجع بقية الأسماء الحسنى كلها.', i:'يُبدأ به كل دعاء واستغاثة: يا الله، أسألك من فضلك.'},
+    {n:'الرحمن', m:'واسع الرحمة لجميع الخلق', e:'رحمته وسعت كل شيء في الدنيا للمؤمن والكافر على حد سواء، فهو الذي يرزق الجميع ويحسن إليهم.', i:'إذا شعرت بضيق الرزق فادع: يا رحمن ارحمني برحمتك الواسعة.'},
+    {n:'الرحيم', m:'خاص رحمته بالمؤمنين يوم القيامة', e:'رحمته الخاصة تتجلى للمؤمنين في الآخرة، فيدخلهم الجنة برحمته لا بأعمالهم وحدها.', i:'عند الاستغفار قل: يا رحيم تجاوز عني برحمتك الخاصة.'},
+    {n:'الملك', m:'صاحب الملك كله وحده', e:'له وحده ملك السماوات والأرض، يتصرف فيها كيف يشاء، ولا شريك له في ملكه.', i:'عند رؤية عظمة الكون تذكر: يا ملك أنت المتصرف في كل شيء.'},
+    {n:'القدوس', m:'المنزّه عن كل نقص وعيب', e:'طاهر مقدّس عن الشريك والولد وعن كل ما لا يليق بجلاله، تنزيهًا كاملًا.', i:'سبّح بقولك: سبوح قدوس رب الملائكة والروح.'},
+    {n:'السلام', m:'السالم من كل عيب والمانح للسلامة', e:'ذاته سالمة من كل نقص، وهو الذي يمنح عباده السلامة والأمان في الدنيا والآخرة.', i:'ادع بالسلامة: يا سلام سلّمني وأهلي من كل سوء.'},
+    {n:'المؤمن', m:'مصدّق أنبياءه ومؤمّن خائفه', e:'يصدّق وعده لأوليائه، ويمنح الأمان لمن يخافه، ويشهد لنفسه بالوحدانية.', i:'عند الخوف قل: يا مؤمن أمّني في الدنيا والآخرة.'},
+    {n:'المهيمن', m:'الرقيب الحافظ المطّلع على كل شيء', e:'شاهد على خلقه لا يغيب عنه شيء من أحوالهم، حافظ لهم مطّلع على ظاهرهم وباطنهم.', i:'استشعر مراقبته دومًا: يا مهيمن راقبني بعينك التي لا تنام.'},
+    {n:'العزيز', m:'الغالب القوي الذي لا يُغلب', e:'صاحب العزة الكاملة التي لا يقهرها شيء، فهو الغالب فوق كل قوة وسلطان.', i:'عند الشعور بالضعف قل: يا عزيز أعزّني بطاعتك.'},
+    {n:'الجبار', m:'الذي يجبر الكسير ويقهر الجبابرة', e:'يجبر قلوب المنكسرين ويصلح أحوال الضعفاء، وهو الذي يقهر كل متكبر جبار في الأرض.', i:'عند انكسار القلب قل: يا جبار اجبر كسري.'},
+    {n:'المتكبر', m:'المتفرد بالعظمة والكبرياء وحده', e:'الكبرياء والعظمة صفة له وحده سبحانه، فلا يليق التكبر بأحد من خلقه.', i:'تذكّر عظمته عند الغرور: يا متكبر أنت وحدك المستحق للكبرياء.'},
+    {n:'الخالق', m:'موجد الأشياء كلها من العدم', e:'أوجد كل شيء في الكون من العدم بقدرته، على غير مثال سابق.', i:'عند التفكر في الخلق قل: يا خالق أحسنت خلقي فأحسن حالي.'},
+    {n:'البارئ', m:'المبدع للخلق بلا عيب ولا تفاوت', e:'خلق كل مخلوق متناسبًا متكاملًا بلا خلل، مبرئًا كل شيء مما لا يليق به.', i:'ادع عند الشدة: يا بارئ أصلح شأني كما أبدعت خلقي.'},
+    {n:'المصور', m:'مُعطي كل مخلوق صورته الخاصة', e:'صوّر كل مخلوق بصورة مختلفة عن غيره، فلا يتشابه اثنان تمامًا في خلقه.', i:'تأمل صورتك وقل: يا مصور جمّل ظاهري وباطني.'},
+    {n:'الغفار', m:'كثير المغفرة للذنوب مهما تكررت', e:'يستر الذنوب ويغفرها مرة بعد مرة، مهما كثرت التوبة والعودة إلى المعصية.', i:'أكثر من قول: أستغفر الله الغفار وأتوب إليه.'},
+    {n:'القهار', m:'الغالب لكل شيء بقوته وقدرته', e:'قاهر لكل مخلوق، خاضعة له جميع القوى، لا يقف أمام إرادته شيء.', i:'عند الظلم قل: يا قهار انتقم لي ممن ظلمني.'},
+    {n:'الوهاب', m:'كثير العطاء بلا مقابل ولا سبب', e:'يهب عباده من فضله دون أن يطلبوا أو يستحقوا، عطاؤه محض تفضل منه.', i:'عند طلب الحاجة قل: يا وهاب هب لي من لدنك رحمة.'},
+    {n:'الرزاق', m:'خالق الأرزاق ومقسّمها لكل مخلوق', e:'يرزق كل مخلوق بما يناسبه، حتى الجنين في بطن أمه، والدواب في أعشاشها.', i:'عند القلق على الرزق قل: يا رزاق ابسط لي في رزقي.'},
+    {n:'الفتاح', m:'فاتح أبواب الرحمة والحكم بالحق', e:'يفتح لعباده أبواب الرزق والهداية والفرج، ويحكم بينهم بالعدل التام.', i:'عند إغلاق الأبواب قل: يا فتاح افتح لي أبواب الخير.'},
+    {n:'العليم', m:'المحيط علمه بكل شيء ظاهرًا وباطنًا', e:'يعلم ما كان وما يكون وما لم يكن لو كان كيف يكون، علمه شامل كامل.', i:'عند الحيرة قل: يا عليم أنت أعلم بما يصلحني.'},
+    {n:'القابض', m:'يقبض الأرزاق والأرواح بحكمته', e:'يقبض الرزق عمن يشاء ابتلاءً أو حكمة، ويقبض الأرواح عند انتهاء آجالها.', i:'عند ضيق الرزق قل: يا قابض ابسط رزقي فأنت الرزاق.'},
+    {n:'الباسط', m:'يبسط الرزق والأرزاق لمن يشاء', e:'يوسّع الرزق على من يشاء توسعة، ويبسط الأرض والأرزاق فضلًا منه ورحمة.', i:'عند طلب السعة قل: يا باسط ابسط لي في رزقي ووقتي.'},
+    {n:'الخافض', m:'يخفض الجبابرة والمتكبرين بعدله', e:'يذل من يشاء ويضع من تكبر واستعلى، فلا عزة إلا بطاعته.', i:'عند الظلم قل: يا خافض اخفض من ظلمني.'},
+    {n:'الرافع', m:'يرفع أولياءه ودرجات الصالحين', e:'يرفع من شاء بالإيمان والعمل الصالح، ويرفع الدرجات في الدنيا والآخرة.', i:'عند طلب الرفعة قل: يا رافع ارفع درجتي عندك.'},
+    {n:'المعز', m:'يهب العزة لمن يشاء من خلقه', e:'يعطي العزة لمن أطاعه، فالعزة كلها بيده يمنحها من يشاء.', i:'عند طلب العزة قل: يا معز أعزّني بطاعتك ورضاك.'},
+    {n:'المذل', m:'يذل من يشاء بعدله وحكمته', e:'يذل من عصاه واستكبر عليه، فلا يملك أحد عزًا إلا بإذنه.', i:'استعذ من الذل: أعوذ بك يا معز من أن تذلني.'},
+    {n:'السميع', m:'يسمع كل صوت خفيًا كان أو جهيرًا', e:'يسمع كل الأصوات مهما خفتت أو تعددت في وقت واحد، لا يخفى عليه صوت.', i:'عند الدعاء تيقّن: يا سميع أنت تسمع دعائي وحديث نفسي.'},
+    {n:'البصير', m:'يرى كل شيء دقيقه وجليله', e:'يبصر كل ما في الكون ظاهرًا وخفيًا، لا يغيب عن بصره شيء مهما صغر.', i:'عند العمل الصالح استشعر: يا بصير أنت ترى اجتهادي.'},
+    {n:'الحكم', m:'الفيصل الذي يحكم بين خلقه بالحق', e:'حكمه نافذ لا رادّ له، يفصل بين الناس يوم القيامة بالعدل التام.', i:'عند الخصومة قل: يا حكم احكم لي بالحق.'},
+    {n:'العدل', m:'المنزّه عن الظلم في كل حكمه', e:'لا يظلم أحدًا مثقال ذرة، وأحكامه كلها موزونة بالعدل الكامل.', i:'عند الظلم تذكّر: يا عدل لن يضيع عندك حقي.'},
+    {n:'اللطيف', m:'الرفيق بعباده العليم بدقائق أمورهم', e:'يوصل الخير لعباده برفق من حيث لا يحتسبون، ويعلم دقائق أحوالهم.', i:'عند الحاجة قل: يا لطيف الطف بي فيما قدّرته لي.'},
+    {n:'الخبير', m:'العليم ببواطن الأمور وحقائقها', e:'يعلم دقائق الأمور وخفاياها كما يعلم ظاهرها، لا يخفى عليه شيء من الحقائق.', i:'عند التخطيط قل: يا خبير أنت أعلم بعاقبة أمري.'},
+    {n:'الحليم', m:'لا يعاجل العصاة بالعقوبة', e:'يمهل من عصاه ولا يعجل بالعقوبة رغم قدرته، رجاء أن يتوب العبد ويرجع.', i:'عند الغضب تذكّر حلمه: يا حليم أمهلني كما أمهلتني كثيرًا.'},
+    {n:'العظيم', m:'الموصوف بكل صفات العظمة والجلال', e:'عظمته لا يحيط بها وصف، أكبر من كل شيء وأجل من كل تصور.', i:'عند التسبيح قل: سبحان الله العظيم وبحمده.'},
+    {n:'الغفور', m:'شديد المغفرة الساتر للذنوب', e:'يغفر الذنوب جميعًا مهما كثرت وعظمت، لمن تاب إليه توبة صادقة.', i:'أكثر من الاستغفار: رب اغفر لي إنك أنت الغفور الرحيم.'},
+    {n:'الشكور', m:'يجازي على القليل من الطاعة بالكثير من الأجر', e:'يقبل العمل القليل ويضاعف عليه الأجر الكثير، ويشكر عباده على طاعتهم.', i:'عند العمل الصالح قل: يا شكور تقبّل مني هذا القليل.'},
+    {n:'العلي', m:'الرفيع فوق خلقه بذاته وقدره', e:'علوّه علو الذات والقدر والشأن، فوق كل شيء لا يعلو عليه أحد.', i:'عند التذلل قل: يا علي أنت الأعلى وأنا الفقير إليك.'},
+    {n:'الكبير', m:'الأعظم من كل شيء قدرًا وشأنًا', e:'أكبر من كل كبير، وكل عظمة في الكون دونه، لا يقاس به شيء.', i:'كبّر عند كل أمر: الله أكبر من كل شيء.'},
+    {n:'الحفيظ', m:'الحافظ لعباده وأعمالهم من الضياع', e:'يحفظ عباده من المهالك، ويحفظ أعمالهم كاملة ليجازيهم عليها يوم القيامة.', i:'عند السفر قل: يا حفيظ احفظني في نفسي وأهلي ومالي.'},
+    {n:'المقيت', m:'المقتدر الذي يعطي الأقوات لكل حي', e:'يوصل القوت لكل مخلوق بقدرته، ويقتدر على إيصال كل ما يحتاجه العبد.', i:'عند الحاجة قل: يا مقيت أوصل لي رزقي وقوتي.'},
+    {n:'الحسيب', m:'الكافي عباده والمحاسب لهم على أعمالهم', e:'يكفي من توكل عليه، ويحاسب الخلق على أدق أعمالهم يوم القيامة.', i:'عند التوكل قل: حسبنا الله ونعم الوكيل.'},
+    {n:'الجليل', m:'الموصوف بصفات الجلال والعظمة الكاملة', e:'له الجلال المطلق في ذاته وصفاته، تتضاءل أمامه كل معاني العظمة البشرية.', i:'عند التسبيح قل: يا ذا الجلال والإكرام أكرمني بطاعتك.'},
+    {n:'الكريم', m:'كثير العطاء والفضل بلا حساب', e:'يعطي من سأله ومن لم يسأله، كرمه لا ينفد ولا تحده حدود.', i:'عند السؤال قل: يا كريم أكرمني من فضلك الواسع.'},
+    {n:'الرقيب', m:'المطّلع الحافظ لكل شيء لا يغفل', e:'يراقب أعمال عباده وأحوالهم في كل لحظة، لا يغفل عنهم طرفة عين.', i:'استشعر رقابته عند الخلوة: يا رقيب أنت شاهد عليّ في السر والعلن.'},
+    {n:'المجيب', m:'يجيب دعاء الداعي إذا دعاه', e:'يستجيب لمن دعاه بصدق وإخلاص، ولو تأخرت الإجابة فهي محققة بحكمته.', i:'عند الدعاء قل: يا مجيب استجب لي فأنت أكرم مسؤول.'},
+    {n:'الواسع', m:'واسع الرحمة والعلم والفضل والرزق', e:'رحمته وعلمه وفضله لا حدود لها، يسع كل شيء برحمته وعطائه.', i:'عند الضيق قل: يا واسع وسّع عليّ من فضلك.'},
+    {n:'الحكيم', m:'المحكم لكل شيء يضعه في موضعه', e:'يضع كل شيء في موضعه الصحيح بحكمة بالغة، لا عبث في خلقه ولا تدبيره.', i:'عند التسليم بالقدر قل: يا حكيم أنت أعلم بحكمة ما قدّرت.'},
+    {n:'الودود', m:'المحب لأوليائه المحبوب من عباده الصالحين', e:'يحب عباده الصالحين ويحبونه، وهو الذي يجعل المحبة بين قلوب المؤمنين.', i:'عند طلب المحبة قل: يا ودود اجعلني محبًا لك محبوبًا عندك.'},
+    {n:'المجيد', m:'العظيم الكريم الواسع الفضل والمجد', e:'له المجد الكامل في ذاته وصفاته وأفعاله، عظيم الشأن كريم العطاء.', i:'عند الثناء عليه قل: سبحان ربي العظيم المجيد.'},
+    {n:'الباعث', m:'يبعث الخلق يوم القيامة للحساب', e:'يبعث الموتى من قبورهم يوم القيامة للحساب والجزاء، ويبعث الرسل بالهدى.', i:'تذكّر البعث لتحسين العمل: يا باعث أعدّني ليوم يُبعث فيه الناس.'},
+    {n:'الشهيد', m:'الحاضر المطّلع على كل شيء لا يغيب عنه', e:'شاهد على كل قول وفعل، حاضر بعلمه في كل مكان وزمان.', i:'عند الأمانة تذكّر: يا شهيد أنت شاهد على ما أقول وأفعل.'},
+    {n:'الحق', m:'الثابت وجوده حقًا لا شك فيه', e:'وجوده حق ثابت لا يتغير، ووعده حق، ودينه حق لا باطل فيه.', i:'عند الشك قل: يا حق ثبّتني على الحق حتى ألقاك.'},
+    {n:'الوكيل', m:'الكافي لمن توكل عليه وفوّض أمره إليه', e:'يكفي أمر من توكل عليه واعتمد عليه في شؤونه كلها.', i:'عند الشدائد قل: حسبي الله ونعم الوكيل.'},
+    {n:'القوي', m:'كامل القدرة لا يعجزه شيء', e:'قوته كاملة لا يعتريها ضعف ولا نقص، لا يعجزه شيء في السماوات ولا الأرض.', i:'عند الضعف قل: يا قوي قوّني على طاعتك.'},
+    {n:'المتين', m:'الشديد القوة الثابت الذي لا يتزعزع', e:'قوته وقدرته ثابتة راسخة لا تتزعزع أمام شيء، فوق كل قوة تصورها.', i:'عند التعب قل: يا متين أعنّي وثبّت قلبي.'},
+    {n:'الولي', m:'ناصر أوليائه ومتولي أمورهم برعايته', e:'يتولى أمور عباده المؤمنين، ينصرهم ويحفظهم ويدبر شؤونهم برعاية خاصة.', i:'عند الحاجة للنصرة قل: يا ولي تولَّ أمري كله.'},
+    {n:'الحميد', m:'المستحق للحمد كله على كل حال', e:'يستحق الحمد الكامل على كل نعمة وكل قضاء، حمده واجب في كل حال.', i:'قل دومًا: الحمد لله على كل حال.'},
+    {n:'المحصي', m:'المحيط علمه بعدد كل شيء ودقائقه', e:'يحصي أعمال العباد وأنفاسهم وكل شيء في الوجود بدقة تامة لا يند عنها شيء.', i:'تذكّر عند العمل: يا محصي أحصيت عملي فأحسن حسابي.'},
+    {n:'المبدئ', m:'الذي أبدأ الخلق من غير مثال سابق', e:'أوجد الخلق أول مرة من العدم دون أن يسبقه مثال يحتذيه.', i:'تفكّر في بدء الخلق: يا مبدئ كما أبدأتني أحسن ختامي.'},
+    {n:'المعيد', m:'يعيد الخلق بعد الموت للبعث والحساب', e:'يعيد الخلق مرة أخرى بعد فنائه، كما أبدأه أول مرة، ليحاسبهم على أعمالهم.', i:'تذكّر الإعادة: يا معيد أعدني إلى رحمتك يوم القيامة.'},
+    {n:'المحيي', m:'واهب الحياة لكل حي', e:'يحيي الأجساد بعد الموت، ويحيي القلوب بالإيمان، وهو مصدر كل حياة.', i:'عند إحياء الأرض بالمطر تذكّر: يا محيي أحيِ قلبي بذكرك.'},
+    {n:'المميت', m:'مقدّر الموت على كل حي', e:'يميت من يشاء في الوقت الذي قدّره، لا يتقدم أجل ولا يتأخر عن وقته.', i:'تذكّر الموت للاستعداد: يا مميت أحسن ختامي عند الموت.'},
+    {n:'الحي', m:'صاحب الحياة الكاملة الدائمة التي لا تزول', e:'حياته أزلية أبدية لا يعتريها فناء ولا نوم ولا تعب، حياة كاملة تامة.', i:'عند التوكل قل: توكلت على الحي الذي لا يموت.'},
+    {n:'القيوم', m:'القائم بتدبير كل شيء وحفظه', e:'قائم بنفسه، ومقيم لكل المخلوقات، يدبر أمورها ويحفظها من الزوال.', i:'اقرأ آية الكرسي وتوكل: يا حي يا قيوم برحمتك أستغيث.'},
+    {n:'الواجد', m:'الغني الذي لا يفتقر لشيء ويجد كل ما يريد', e:'لا يعوزه شيء، يجد كل ما يريده متى شاء، غني بذاته عن كل أحد.', i:'عند الافتقار قل: يا واجد أغنني من فضلك.'},
+    {n:'الماجد', m:'العظيم الكريم الواسع الجود والفضل', e:'مجده عظيم في ذاته وأفعاله، كريم واسع الفضل والإحسان على عباده.', i:'عند الثناء قل: يا ماجد لك المجد كله في السماوات والأرض.'},
+    {n:'الواحد', m:'المتفرد بذاته وصفاته لا شريك له', e:'واحد في ذاته وأفعاله وصفاته، لا يشاركه أحد في شيء من خصائصه.', i:'وحّده في العبادة: لا إله إلا أنت وحدك لا شريك لك.'},
+    {n:'الأحد', m:'المتفرد الذي لا ثاني له مطلقًا', e:'أحدية كاملة لا تقبل التجزئة أو الشراكة أو المثيل، هو وحده الأحد الفرد.', i:'اقرأ سورة الإخلاص متدبرًا: قل هو الله أحد.'},
+    {n:'الصمد', m:'الذي يُقصد في الحوائج ولا يحتاج لأحد', e:'تُقصد إليه الخلائق كلها في حاجاتها، وهو غني عنها لا يحتاج إلى شيء منها.', i:'عند الحاجة توجّه إليه وحده: يا صمد إليك وحدك المشتكى.'},
+    {n:'القادر', m:'صاحب القدرة الكاملة على كل شيء', e:'قادر على كل ممكن، لا يعجزه شيء في الكون صغيرًا كان أو كبيرًا.', i:'عند الشعور بالعجز قل: يا قادر أنت قادر على قضاء حاجتي.'},
+    {n:'المقتدر', m:'كامل القدرة الذي يقهر بقدرته كل شيء', e:'قدرته أشمل من مطلق القدرة، فهو المقتدر الذي لا يحده شيء في تنفيذ إرادته.', i:'عند الشدة قل: يا مقتدر يسّر لي أمري الصعب.'},
+    {n:'المقدم', m:'يقدّم من يشاء بفضله وحكمته', e:'يقدّم من يشاء في الرتبة والمنزلة والزمان بحكمته البالغة.', i:'عند طلب التوفيق قل: يا مقدم قدّمني في الخير.'},
+    {n:'المؤخر', m:'يؤخر من يشاء بحكمته وعدله', e:'يؤخر من يشاء عن منزلته أو أجله بحكمة يعلمها، لا اعتراض على قضائه.', i:'عند التسليم بالتأخير قل: يا مؤخر لك الحكمة فيما أخّرت.'},
+    {n:'الأول', m:'الذي ليس قبله شيء', e:'أزلي لا بداية لوجوده، كان قبل كل شيء ولم يكن معه شيء آخر.', i:'تدبر أزليته: يا أول ليس قبلك شيء وأنت خالق كل شيء.'},
+    {n:'الآخر', m:'الذي ليس بعده شيء', e:'باقٍ بعد فناء كل شيء، لا نهاية لوجوده، هو الآخر بعد فناء الخلق جميعًا.', i:'تذكّر بقاءه عند فناء الدنيا: يا آخر أنت الباقي بعد فناء كل شيء.'},
+    {n:'الظاهر', m:'الغالب فوق كل شيء الظاهر بآياته وأدلته', e:'ظاهر بأدلة وجوده وآياته الواضحة في كل شيء، فوق كل شيء بقدرته وعلوه.', i:'تأمل في آياته الظاهرة: يا ظاهر أظهرت لي الحق فثبّتني عليه.'},
+    {n:'الباطن', m:'العليم بما بطن وخفي من الأمور', e:'مطّلع على بواطن الأمور وخفاياها، لا تخفى عليه سريرة ولا خاطر يمر بالقلب.', i:'استشعر علمه بالسرائر: يا باطن اطّلعت على سري فطهّره.'},
+    {n:'الوالي', m:'المتولي لتدبير الكون كله بنفسه', e:'يتولى تدبير أمر الكون كله بنفسه، مالك أمر كل شيء ومدبره وحده.', i:'عند التفويض قل: يا والي تولَّ أمري في الدنيا والآخرة.'},
+    {n:'المتعالي', m:'المنزّه عن كل نقص وشبيه', e:'متعالٍ عن كل ما لا يليق به من مثيل أو نقص أو عجز، فوق كل تصور.', i:'نزّهه عند الشرك: يا متعالي تعاليت عما يصفه المشركون.'},
+    {n:'البر', m:'المحسن إلى خلقه بلطفه وعطائه', e:'كثير الإحسان والبر بعباده، يتلطف بهم ويحسن إليهم في كل أحوالهم.', i:'عند سؤال البر قل: يا بر ارزقني برًا بوالديّ وبك.'},
+    {n:'التواب', m:'يقبل توبة عباده مهما تكررت الذنوب', e:'يفتح باب التوبة دومًا ويقبلها من عبده مهما عاد للذنب، رحمة منه وفضلًا.', i:'أكثر من التوبة: يا تواب تب عليّ فإني تائب إليك.'},
+    {n:'المنتقم', m:'ينتقم من الظالمين المصرّين على الكفر والظلم', e:'ينتقم ممن أصرّ على الظلم والفساد بعد الإمهال، عدلًا منه لا ظلمًا.', i:'عند الظلم قل: يا منتقم انتقم لي ممن ظلمني بحقك لا بحقي.'},
+    {n:'العفو', m:'يمحو الذنوب ويتجاوز عنها بلا حساب', e:'يمحو السيئات محوًا تامًا ويتجاوز عن المذنب كأن الذنب لم يكن.', i:'كان النبي ﷺ يعلّم: اللهم إنك عفو تحب العفو فاعف عني.'},
+    {n:'الرؤوف', m:'شديد الرأفة واللطف بعباده', e:'رأفته بعباده تفوق رأفة الوالدة بولدها، يرفق بهم في كل تدبيره لشؤونهم.', i:'عند الضعف قل: يا رؤوف ارأف بضعفي وقلة حيلتي.'},
+    {n:'مالك الملك', m:'المتصرف في الملك كله يعطيه ويسلبه', e:'يعطي الملك من يشاء وينزعه ممن يشاء، لا يسأله أحد عما يفعل في ملكه.', i:'عند طلب التمكين قل: يا مالك الملك آتني ملكًا من عندك.'},
+    {n:'ذو الجلال والإكرام', m:'صاحب العظمة والإكرام لأوليائه', e:'له الجلال المطلق والإكرام الواسع لعباده الصالحين، يجمع بين الهيبة والفضل.', i:'أكثر من قول: يا ذا الجلال والإكرام، فقد أوصى بها النبي ﷺ.'},
+    {n:'المقسط', m:'العادل الذي يقيم القسط بين خلقه', e:'يحكم بين عباده بالقسط التام يوم القيامة، فلا يظلم أحدًا حقه.', i:'عند طلب العدل قل: يا مقسط أنصفني ممن ظلمني.'},
+    {n:'الجامع', m:'يجمع الخلائق يوم القيامة للحساب', e:'يجمع الناس جميعًا يوم لا ريب فيه للحساب، ويجمع بين المتفرقات بقدرته.', i:'عند الفرقة قل: يا جامع اجمع شملي بمن أحب.'},
+    {n:'الغني', m:'الغني المطلق الذي لا يحتاج لأحد', e:'غنى كامل عن كل خلقه، لا تنفعه طاعتهم ولا تضره معصيتهم.', i:'عند التذلل قل: يا غني أغنني من فضلك عمن سواك.'},
+    {n:'المغني', m:'يغني من يشاء من عباده بفضله', e:'يغني عباده بالرزق أو بالقناعة، فضلًا منه على من يشاء من خلقه.', i:'عند الحاجة قل: يا مغني أغنني بحلالك عن حرامك.'},
+    {n:'المانع', m:'يمنع الشر عن عباده ويمنع من يشاء عطاءه', e:'يمنع البلاء عن عباده بحكمته، كما يمنع العطاء عمن لا يستحقه لحكمة يعلمها.', i:'عند طلب الحماية قل: يا مانع امنع عني كل سوء.'},
+    {n:'الضار', m:'خالق الضر الذي لا يقع إلا بإذنه', e:'يقدّر الضرر على من يشاء ابتلاءً أو عقوبة، ولا يقع ضر إلا بإذنه وحكمته.', i:'استعذ من الضر: أعوذ بك من شر ما قدّرت من ضر.'},
+    {n:'النافع', m:'خالق النفع الذي لا ينفع أحد إلا بإذنه', e:'كل نفع في الكون بإذنه وتقديره، لا ينفع أحد أحدًا إلا بمشيئته.', i:'عند طلب النفع قل: يا نافع انفعني بما علّمتني.'},
+    {n:'النور', m:'منوّر السماوات والأرض بالحس والهداية', e:'نوّر السماوات والأرض بنوره الحسي، ونوّر قلوب المؤمنين بنور الهداية والإيمان.', i:'عند طلب الهداية قل: اللهم اجعل في قلبي نورًا.'},
+    {n:'الهادي', m:'يهدي من يشاء إلى الصراط المستقيم', e:'يرشد عباده إلى طريق الحق، ويوفق من يشاء منهم للثبات عليه.', i:'في كل صلاة تقول: اهدنا الصراط المستقيم.'},
+    {n:'البديع', m:'مبدع الخلق على غير مثال سابق', e:'أبدع خلق السماوات والأرض من غير مثال سبقه إليه، فكل خلقه بديع مذهل.', i:'تفكّر في بديع خلقه: يا بديع السماوات والأرض أبدع لي فرجًا.'},
+    {n:'الباقي', m:'الدائم الذي لا يفنى بعد فناء كل شيء', e:'باقٍ لا يعتريه فناء ولا زوال بعد أن يفنى كل شيء سواه.', i:'تذكّر بقاءه عند فناء الدنيا: يا باقي أبقِ لي أجر عملي.'},
+    {n:'الوارث', m:'الباقي الذي يرث الأرض ومن عليها', e:'يبقى بعد فناء كل الخلائق وورثة الأملاك جميعًا، فلا يبقى ملك إلا له.', i:'تذكّر أن كل شيء يؤول إليه: يا وارث أنت خير الوارثين.'},
+    {n:'الرشيد', m:'المرشد لعباده إلى ما فيه صلاحهم', e:'يهدي عباده لما فيه رشدهم وصلاح دينهم ودنياهم، حكيم في كل توجيه وتدبير.', i:'عند الحيرة قل: يا رشيد أرشدني إلى ما فيه الخير لي.'}
+  ];
+
+  const NAME_LIST = NAMES.map((x,i)=> Object.assign({id:'n'+(i+1), order:i+1}, x));
+  const NAME_MAP = Object.fromEntries(NAME_LIST.map(n=>[n.id,n]));
+  const TOTAL = NAME_LIST.length;
+
+  const el = id => document.getElementById(id);
+  const toast = el('toast');
+  function showToast(msg){ toast.textContent = msg; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 2400); }
+
+  const state = {
+    fontSize:17, theme:'night', voiceRate:85, vibrate:true,
+    learned:{}, activeTab:'grid', searchQuery:'', currentId:null,
+    tasbihIdx:0, quizCorrect:0, quizWrong:0, quizAnswer:null
+  };
+
+  function loadPrefs(){
+    try{ Object.assign(state, JSON.parse(localStorage.getItem('asma_prefs')||'{}')); }catch(e){}
+    try{ state.learned = JSON.parse(localStorage.getItem('asma_learned')||'{}'); }catch(e){ state.learned={}; }
+  }
+  function savePrefs(){
+    localStorage.setItem('asma_prefs', JSON.stringify({fontSize:state.fontSize, theme:state.theme, voiceRate:state.voiceRate, vibrate:state.vibrate}));
+  }
+  function saveLearned(){ localStorage.setItem('asma_learned', JSON.stringify(state.learned)); }
+
+  function applyPrefs(){
+    document.documentElement.style.setProperty('--arfs', state.fontSize+'px');
+    document.body.classList.toggle('theme-paper', state.theme==='paper');
+    el('fontSize').value = state.fontSize;
+    el('voiceRate').value = state.voiceRate;
+    document.querySelectorAll('.theme-sw').forEach(s=> s.classList.toggle('active', s.dataset.theme===state.theme));
+    el('vibrateSwitch').classList.toggle('on', state.vibrate);
+    el('vibrateKnob').style.transform = state.vibrate ? 'translateX(-19px)' : 'none';
+    el('vibrateSwitch').style.background = state.vibrate ? 'var(--gold)' : '';
+  }
+  function vib(ms){ if(state.vibrate && navigator.vibrate) navigator.vibrate(ms); }
+
+  function ar(n){ const map=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩']; return String(n).replace(/[0-9]/g,d=>map[d]); }
+
+  function updateProgress(){
+    const c = Object.values(state.learned).filter(Boolean).length;
+    el('progressText').textContent = `${ar(c)} من ٩٩`;
+    el('progressFill').style.width = Math.round((c/TOTAL)*100)+'%';
+  }
+
+  function filteredNames(){
+    const q = state.searchQuery.trim();
+    if(!q) return NAME_LIST;
+    return NAME_LIST.filter(n=> n.n.includes(q) || n.m.includes(q));
+  }
+
+  /* ---------------- Grid ---------------- */
+  function renderGrid(){
+    const list = filteredNames();
+    el('gridEmpty').style.display = list.length ? 'none' : 'block';
+    el('namesGrid').innerHTML = list.map(n=>{
+      const done = !!state.learned[n.id];
+      return `<div class="name-card" data-id="${n.id}">
+        <div class="ring ${done?'done':''}"></div>
+        <div class="ord">${ar(n.order)}</div>
+        <div class="name">${n.n}</div>
+        <div class="meaning">${n.m}</div>
+      </div>`;
+    }).join('');
+    el('namesGrid').querySelectorAll('.name-card').forEach(c=>{
+      c.addEventListener('click', ()=> openDetail(c.dataset.id));
+    });
+  }
+
+  /* ---------------- Tasbih (signature) ---------------- */
+  const RING_CIRC = 653.4;
+  function renderTasbih(){
+    const n = NAME_LIST[state.tasbihIdx];
+    el('beadName').textContent = n.n;
+    el('beadOrd').textContent = `${ar(n.order)} من ٩٩`;
+    el('beadMeaning').textContent = n.m;
+    el('beadExplain').textContent = n.e;
+    const pct = (state.tasbihIdx+1)/TOTAL;
+    el('beadRing').style.strokeDashoffset = RING_CIRC * (1-pct);
+    const done = !!state.learned[n.id];
+    el('beadMarkBtn').textContent = done ? '★ مُعلَّمة كمحفوظة' : '☆ وضع علامة "حفظتها"';
+    el('beadMarkBtn').classList.toggle('secondary', !done);
+    stopNarration();
+  }
+  function tasbihStep(dir){
+    state.tasbihIdx = (state.tasbihIdx + dir + TOTAL) % TOTAL;
+    vib(20);
+    renderTasbih();
+  }
+  el('beadNext').addEventListener('click', ()=> tasbihStep(1));
+  el('beadPrev').addEventListener('click', ()=> tasbihStep(-1));
+  el('beadDisplay').addEventListener('click', ()=> tasbihStep(1));
+  el('beadMarkBtn').addEventListener('click', ()=>{
+    const n = NAME_LIST[state.tasbihIdx];
+    state.learned[n.id] = !state.learned[n.id];
+    saveLearned(); updateProgress(); renderTasbih();
+  });
+  el('beadListen').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    speakName(NAME_LIST[state.tasbihIdx]);
+  });
+
+  /* ---------------- Quiz ---------------- */
+  function newQuizQuestion(){
+    state.quizAnswer = null;
+    const correctIdx = Math.floor(Math.random()*TOTAL);
+    const correct = NAME_LIST[correctIdx];
+    const askForMeaning = Math.random() > 0.5;
+    let pool = NAME_LIST.filter((n,i)=> i!==correctIdx);
+    pool = pool.sort(()=>Math.random()-0.5).slice(0,3);
+    const options = [correct, ...pool].sort(()=>Math.random()-0.5);
+
+    if(askForMeaning){
+      el('quizLabel').textContent = 'ما معنى هذا الاسم؟';
+      el('quizQuestion').textContent = correct.n;
+      el('quizOptions').innerHTML = options.map(o=>`<div class="quiz-opt" data-correct="${o.id===correct.id}" data-id="${o.id}">${o.m}</div>`).join('');
+    } else {
+      el('quizLabel').textContent = 'أي اسم يدل على هذا المعنى؟';
+      el('quizQuestion').textContent = correct.m;
+      el('quizOptions').innerHTML = options.map(o=>`<div class="quiz-opt" data-correct="${o.id===correct.id}" data-id="${o.id}">${o.n}</div>`).join('');
+    }
+    el('quizOptions').querySelectorAll('.quiz-opt').forEach(opt=>{
+      opt.addEventListener('click', ()=> answerQuiz(opt));
+    });
+  }
+  function answerQuiz(opt){
+    if(state.quizAnswer) return;
+    state.quizAnswer = opt.dataset.id;
+    const isCorrect = opt.dataset.correct === 'true';
+    document.querySelectorAll('.quiz-opt').forEach(o=>{
+      if(o.dataset.correct==='true') o.classList.add('correct');
+      else if(o===opt) o.classList.add('wrong');
+    });
+    if(isCorrect){ state.quizCorrect++; vib(20); } else { state.quizWrong++; vib([15,40,15]); }
+    el('quizCorrect').textContent = state.quizCorrect;
+    el('quizWrong').textContent = state.quizWrong;
+    setTimeout(newQuizQuestion, 1400);
+  }
+
+  /* ---------------- Tabs ---------------- */
+  document.querySelectorAll('.tabs button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      state.activeTab = b.dataset.tab;
+      document.querySelectorAll('.tabs button').forEach(x=> x.classList.toggle('active', x===b));
+      document.querySelectorAll('.panel').forEach(p=> p.classList.toggle('active', p.id==='panel-'+b.dataset.tab));
+      el('detailView').style.display = 'none';
+      if(b.dataset.tab==='grid') renderGrid();
+      if(b.dataset.tab==='tasbih') renderTasbih();
+      if(b.dataset.tab==='quiz' && !document.querySelector('.quiz-opt')) newQuizQuestion();
+    });
+  });
+
+  el('searchBox').addEventListener('input', e=>{
+    state.searchQuery = e.target.value;
+    if(state.activeTab==='grid') renderGrid();
+  });
+
+  /* ---------------- Detail view ---------------- */
+  function openDetail(id){
+    const n = NAME_MAP[id];
+    if(!n) return;
+    state.currentId = id;
+    stopNarration();
+
+    document.querySelectorAll('.panel').forEach(p=> p.classList.remove('active'));
+    el('detailView').style.display = 'block';
+    el('crumbName').textContent = n.n;
+
+    el('dOrd').textContent = `الاسم رقم ${ar(n.order)} من ٩٩`;
+    el('dName').textContent = n.n;
+    el('dMeaning').textContent = n.m;
+    el('dExplain').textContent = n.e;
+    el('dInvoke').textContent = n.i;
+
+    const done = !!state.learned[n.id];
+    el('markBtn').textContent = done ? '★ مُعلَّمة كمحفوظة' : '☆ وضع علامة "حفظتها"';
+    el('markBtn').classList.toggle('secondary', !done);
+
+    const idx = NAME_LIST.findIndex(x=>x.id===id);
+    el('prevName').disabled = idx<=0;
+    el('nextName').disabled = idx>=TOTAL-1;
+
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  el('backBtn').addEventListener('click', ()=>{
+    stopNarration();
+    el('detailView').style.display = 'none';
+    document.querySelectorAll('.panel').forEach(p=> p.classList.toggle('active', p.id==='panel-'+state.activeTab));
+    if(state.activeTab==='grid') renderGrid();
+  });
+
+  el('markBtn').addEventListener('click', ()=>{
+    const id = state.currentId;
+    state.learned[id] = !state.learned[id];
+    saveLearned(); updateProgress();
+    const done = !!state.learned[id];
+    el('markBtn').textContent = done ? '★ مُعلَّمة كمحفوظة' : '☆ وضع علامة "حفظتها"';
+    el('markBtn').classList.toggle('secondary', !done);
+    showToast(done ? 'أُضيف إلى أسمائك المحفوظة' : 'أُزيل من أسمائك المحفوظة');
+  });
+
+  el('shareBtn').addEventListener('click', async ()=>{
+    const n = NAME_MAP[state.currentId];
+    if(!n) return;
+    const text = `${n.n} — ${n.m}\n\n${n.e}\n\n(من تطبيق أسماء الله الحسنى)`;
+    try{ if(navigator.share){ await navigator.share({text}); return; } }catch(e){}
+    try{ await navigator.clipboard.writeText(text); showToast('تم نسخ الاسم ومعناه'); }
+    catch(e){ showToast('تعذّر النسخ التلقائي'); }
+  });
+
+  el('prevName').addEventListener('click', ()=>{
+    const idx = NAME_LIST.findIndex(x=>x.id===state.currentId);
+    if(idx>0) openDetail(NAME_LIST[idx-1].id);
+  });
+  el('nextName').addEventListener('click', ()=>{
+    const idx = NAME_LIST.findIndex(x=>x.id===state.currentId);
+    if(idx<TOTAL-1) openDetail(NAME_LIST[idx+1].id);
+  });
+
+  /* ---------------- Narration ---------------- */
+  function stopNarration(){
+    if('speechSynthesis' in window) speechSynthesis.cancel();
+    el('listenBtn').textContent = '🔊 استماع';
+    el('listenBtn').classList.remove('playing');
+  }
+  function speakName(n){
+    if(!('speechSynthesis' in window)){ showToast('المتصفح لا يدعم الاستماع الصوتي'); return; }
+    if(speechSynthesis.speaking){ stopNarration(); return; }
+    const text = `${n.n}. ${n.m}. ${n.e}`;
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ar-SA';
+    utter.rate = state.voiceRate/100;
+    const voices = speechSynthesis.getVoices();
+    const arVoice = voices.find(v=> v.lang && v.lang.startsWith('ar'));
+    if(arVoice) utter.voice = arVoice;
+    utter.onend = stopNarration;
+    utter.onerror = stopNarration;
+    speechSynthesis.speak(utter);
+  }
+  el('listenBtn').addEventListener('click', ()=>{
+    const n = NAME_MAP[state.currentId];
+    if(!n) return;
+    if(speechSynthesis.speaking){ stopNarration(); return; }
+    speakName(n);
+    el('listenBtn').textContent = '⏸ إيقاف';
+    el('listenBtn').classList.add('playing');
+  });
+  if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged = ()=>{}; }
+
+  /* ---------------- Settings drawer ---------------- */
+  const drawer = el('drawer'), overlay = el('drawerOverlay');
+  el('settingsBtn').addEventListener('click', ()=>{ drawer.classList.add('open'); overlay.classList.add('open'); });
+  el('closeDrawer').addEventListener('click', ()=>{ drawer.classList.remove('open'); overlay.classList.remove('open'); });
+  overlay.addEventListener('click', ()=>{ drawer.classList.remove('open'); overlay.classList.remove('open'); });
+  el('fontSize').addEventListener('input', e=>{ state.fontSize = +e.target.value; applyPrefs(); savePrefs(); });
+  el('voiceRate').addEventListener('input', e=>{ state.voiceRate = +e.target.value; savePrefs(); });
+  document.querySelectorAll('.theme-sw').forEach(s=>{
+    s.addEventListener('click', ()=>{ state.theme = s.dataset.theme; applyPrefs(); savePrefs(); });
+  });
+  el('vibrateSwitch').addEventListener('click', ()=>{ state.vibrate = !state.vibrate; applyPrefs(); savePrefs(); });
+  el('resetProgressBtn').addEventListener('click', ()=>{
+    state.learned = {}; saveLearned(); updateProgress();
+    if(state.activeTab==='grid') renderGrid();
+    if(state.activeTab==='tasbih') renderTasbih();
+    showToast('تم مسح كل علامات الحفظ');
+  });
+
+  /* ---------------- Init ---------------- */
+  loadPrefs();
+  applyPrefs();
+  updateProgress();
+  renderGrid();
+})();
+</script>
+</body>
+</html>

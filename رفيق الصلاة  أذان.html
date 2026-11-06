@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>رفيق الصلاة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#080d1a;
+    --night-2:#0f1c33;
+    --emerald:#0d2b26;
+    --gold:#c9a24b;
+    --gold-2:#f0d38a;
+    --gold-deep:#8a6a26;
+    --gold-soft:#e8caa0;
+    --teal:#1f5f5b;
+    --ink:#f3f0e6;
+    --ink-dim:#9fb0c7;
+    --line:rgba(201,162,75,0.28);
+    --line-soft:rgba(201,162,75,0.14);
+    --danger:#c0563f;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:
+      radial-gradient(1000px 500px at 50% -8%, #1a2b4a 0%, transparent 62%),
+      radial-gradient(800px 500px at 100% 100%, rgba(31,95,91,0.16) 0%, transparent 60%),
+      linear-gradient(180deg, var(--night) 0%, #05080f 100%);
+    color:var(--ink);
+    font-family:'Tajawal', sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  .bg-motif{
+    position:fixed; inset:0; z-index:0; opacity:0.16; pointer-events:none;
+    background-image:
+      radial-gradient(circle at 0 0, transparent 9px, var(--gold) 9.6px, transparent 10.2px),
+      radial-gradient(circle at 60px 0, transparent 9px, var(--gold) 9.6px, transparent 10.2px),
+      radial-gradient(circle at 30px 52px, transparent 9px, var(--gold) 9.6px, transparent 10.2px),
+      repeating-linear-gradient(60deg, transparent 0 29px, rgba(201,162,75,0.5) 29px 29.6px, transparent 29.6px 60px),
+      repeating-linear-gradient(-60deg, transparent 0 29px, rgba(201,162,75,0.5) 29px 29.6px, transparent 29.6px 60px);
+    background-size:60px 104px;
+    -webkit-mask-image:radial-gradient(1000px 800px at 50% 20%, #000 0%, transparent 80%);
+    mask-image:radial-gradient(1000px 800px at 50% 20%, #000 0%, transparent 80%);
+  }
+  .frieze{
+    position:relative; z-index:1; height:10px; margin:0 auto 4px; max-width:520px;
+    background-image:repeating-linear-gradient(135deg, transparent 0 6px, var(--gold) 6px 7px, transparent 7px 12px),
+                      repeating-linear-gradient(45deg, transparent 0 6px, var(--gold) 6px 7px, transparent 7px 12px);
+    background-position:0 0, 0 -1px;
+    opacity:.55;
+  }
+  .wrap{position:relative; z-index:1; max-width:520px; margin:0 auto; padding:22px 18px 40px;}
+
+  header{text-align:center; margin-bottom:22px; position:relative; padding-top:6px;}
+  .arch{
+    width:150px; height:90px; margin:0 auto 6px; position:relative;
+  }
+  .arch svg{width:100%; height:100%;}
+  header .eyebrow{
+    font-size:11px; letter-spacing:4px; color:var(--gold-soft); text-transform:uppercase;
+  }
+  header .divider{
+    display:flex; align-items:center; justify-content:center; gap:8px; margin:6px 0;
+  }
+  header .divider .ln{height:1px; width:36px; background:linear-gradient(90deg, transparent, var(--gold), transparent);}
+  header .divider svg{width:14px; height:14px; opacity:.9;}
+  header h1{
+    font-family:'Amiri', serif; font-weight:700; font-size:32px; margin:4px 0 2px;
+    background:linear-gradient(180deg, var(--gold-2), var(--gold-deep));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow:0 1px 0 rgba(0,0,0,0.3);
+  }
+  header .greg{font-size:12px; color:var(--ink-dim); margin-bottom:4px;}
+  header .loc{font-size:13px; color:var(--ink-dim);}
+  header .loc button{
+    background:none;border:1px solid var(--line);color:var(--gold-soft);
+    border-radius:20px; padding:4px 12px; font-family:inherit; font-size:12px; margin-inline-start:8px;
+    cursor:pointer;
+  }
+  .loc-warning{
+    font-size:11px; color:#e8b98a; background:rgba(192,86,63,0.12); border:1px solid rgba(192,86,63,0.35);
+    border-radius:10px; padding:6px 10px; margin-top:8px; display:none;
+  }
+  .loc-warning.show{display:block;}
+  .loc-panel{
+    display:none; text-align:right; border:1px solid var(--line); border-radius:16px; padding:14px;
+    margin-top:12px; background:rgba(255,255,255,0.02);
+  }
+  .loc-panel.open{display:block;}
+  .loc-panel input[type="text"], .loc-panel input[type="number"]{
+    width:100%; background:#101c30; color:var(--ink); border:1px solid var(--line); border-radius:10px;
+    padding:9px 10px; font-family:'Tajawal'; font-size:13px; margin-bottom:8px;
+  }
+  .loc-results{max-height:160px; overflow-y:auto; margin-bottom:8px;}
+  .loc-result-item{
+    padding:9px 10px; border-radius:10px; font-size:13px; cursor:pointer; color:var(--ink-dim);
+  }
+  .loc-result-item:hover, .loc-result-item:active{background:rgba(201,162,75,0.10); color:var(--gold-soft);}
+  .loc-manual-row{display:flex; gap:8px;}
+  .loc-manual-row input{flex:1;}
+  .loc-actions{display:flex; gap:8px; margin-top:10px;}
+  .loc-actions button{flex:1;}
+
+  nav.tabs{
+    display:flex; gap:8px; background:linear-gradient(180deg, #101d34, #0b1526);
+    border:1px solid var(--line); border-radius:16px; padding:5px; margin-bottom:20px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02);
+  }
+  nav.tabs button{
+    flex:1; padding:11px 6px; border:none; border-radius:12px; background:transparent;
+    color:var(--ink-dim); font-family:'Tajawal'; font-weight:700; font-size:13px; cursor:pointer;
+    transition:.25s; display:flex; flex-direction:column; align-items:center; gap:3px;
+  }
+  nav.tabs button svg{width:16px; height:16px; opacity:.65; transition:.25s;}
+  nav.tabs button.active{
+    background:linear-gradient(180deg, rgba(201,162,75,0.22), rgba(201,162,75,0.06));
+    color:var(--gold-2); box-shadow:inset 0 0 0 1px var(--line), 0 4px 14px rgba(201,162,75,0.08);
+  }
+  nav.tabs button.active svg{opacity:1;}
+
+  .panel{display:none;}
+  .panel.active{display:block; animation:fadeIn .35s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  /* ---- Times panel ---- */
+  .next-card{
+    border:1px solid var(--line); border-radius:20px; padding:22px 20px;
+    background:linear-gradient(160deg, rgba(201,162,75,0.12), rgba(13,43,38,0.35));
+    box-shadow:inset 0 0 0 1px rgba(201,162,75,0.10), 0 10px 30px rgba(0,0,0,0.4);
+    text-align:center; margin-bottom:16px; position:relative;
+  }
+  .next-card::before, .next-card::after,
+  .card::before, .card::after{
+    content:''; position:absolute; width:14px; height:14px; border:var(--gold) solid; opacity:.55;
+  }
+  .next-card::before, .card::before{ top:8px; inset-inline-start:8px; border-width:1.5px 0 0 1.5px; }
+  .next-card::after, .card::after{ top:8px; inset-inline-end:8px; border-width:1.5px 1.5px 0 0; }
+  .next-card .lbl{font-size:12px; color:var(--ink-dim); letter-spacing:2px;}
+  .next-card .name{font-family:'Amiri'; font-size:27px; color:var(--gold-2); margin:4px 0;}
+  .next-card .countdown{
+    font-size:33px; font-weight:900; letter-spacing:1px;
+    background:linear-gradient(180deg, var(--ink), var(--gold-soft));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+
+  ul.times{list-style:none; margin:0; padding:0; border:1px solid var(--line); border-radius:18px; overflow:hidden;
+    box-shadow:inset 0 0 0 1px rgba(201,162,75,0.06);}
+  ul.times li{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 18px; border-bottom:1px solid var(--line-soft); background:rgba(255,255,255,0.01);
+  }
+  ul.times li:last-child{border-bottom:none;}
+  ul.times li.current{background:linear-gradient(90deg, rgba(201,162,75,0.14), rgba(31,95,91,0.08));}
+  ul.times li .name{font-weight:700; font-size:15px;}
+  ul.times li .name small{display:block; font-weight:400; color:var(--ink-dim); font-size:11px;}
+  ul.times li .time{font-family:'Amiri'; font-size:20px; color:var(--gold-soft);}
+  ul.times li .toggle{
+    width:38px; height:22px; border-radius:20px; background:#1c2740; border:1px solid var(--line);
+    position:relative; cursor:pointer; margin-inline-start:12px;
+  }
+  ul.times li .toggle .dot{
+    position:absolute; top:2px; right:2px; width:16px; height:16px; border-radius:50%;
+    background:var(--ink-dim); transition:.2s;
+  }
+  ul.times li .toggle.on{background:linear-gradient(90deg,#1f5f5b,#2c7a74);}
+  ul.times li .toggle.on .dot{right:18px; background:var(--gold-2);}
+
+  /* ---- Qibla panel ---- */
+  .qibla-wrap{display:flex; flex-direction:column; align-items:center; padding:10px 0 6px;}
+  .compass{
+    width:260px; height:260px; border-radius:50%; position:relative;
+    background:radial-gradient(circle at 50% 40%, #16233f, #080d1a 72%);
+    border:2px solid var(--line);
+    box-shadow:0 0 0 1px rgba(201,162,75,0.10), 0 0 0 9px rgba(201,162,75,0.05), 0 20px 50px rgba(0,0,0,0.55);
+  }
+  .compass .ring{
+    position:absolute; inset:14px; border-radius:50%; border:1px dashed var(--line);
+  }
+  .compass .tick{
+    position:absolute; left:50%; top:6px; width:2px; height:14px; background:var(--line);
+    transform-origin:1px 124px;
+  }
+  .compass .dir-label{
+    position:absolute; font-size:13px; color:var(--ink-dim); font-weight:700;
+  }
+  .needle{
+    position:absolute; inset:0; transition:transform .3s ease-out;
+  }
+  .needle svg{width:100%; height:100%;}
+  .compass .center-dot{
+    position:absolute; left:50%; top:50%; width:10px; height:10px; margin:-5px;
+    border-radius:50%; background:var(--gold);
+  }
+  .qibla-readout{margin-top:18px; text-align:center;}
+  .qibla-readout .deg{font-family:'Amiri'; font-size:42px; color:var(--gold-soft);}
+  .qibla-readout .note{font-size:12px; color:var(--ink-dim); max-width:280px; margin:6px auto 0;}
+  .btn{
+    background:linear-gradient(180deg,var(--gold-2),var(--gold-deep)); color:#1a1200; border:none;
+    padding:12px 22px; border-radius:14px; font-family:'Tajawal'; font-weight:700; font-size:14px;
+    cursor:pointer; margin-top:14px; box-shadow:0 6px 16px rgba(201,162,75,0.18);
+  }
+  .btn.secondary{ background:transparent; border:1px solid var(--line); color:var(--gold-soft); box-shadow:none;}
+
+  /* ---- Adhan panel ---- */
+  .card{
+    border:1px solid var(--line); border-radius:18px; padding:18px 18px 16px; margin-bottom:14px;
+    background:linear-gradient(160deg, rgba(201,162,75,0.05), rgba(255,255,255,0.01));
+    box-shadow:inset 0 0 0 1px rgba(201,162,75,0.06); position:relative;
+  }
+  .card h3{margin:0 0 6px; font-size:15px; color:var(--gold-2); font-family:'Amiri'; font-weight:700; letter-spacing:.3px;}
+  .card p{margin:0; font-size:13px; color:var(--ink-dim); line-height:1.7;}
+  .row{display:flex; justify-content:space-between; align-items:center; margin-top:10px;}
+  select{
+    background:#101c30; color:var(--ink); border:1px solid var(--line); border-radius:10px;
+    padding:8px 10px; font-family:inherit;
+  }
+  .status-pill{
+    display:inline-block; font-size:11px; padding:4px 10px; border-radius:20px;
+    border:1px solid var(--line); color:var(--ink-dim); margin-top:8px;
+  }
+  .status-pill.ok{color:#8fd6c9; border-color:#2c7a74;}
+  footer{text-align:center; margin-top:26px; font-size:11px; color:var(--ink-dim); line-height:1.8;}
+</style>
+</head>
+<body>
+<div class="bg-motif"></div>
+<div class="frieze"></div>
+<div class="wrap">
+
+  <header>
+    <div class="arch">
+      <svg viewBox="0 0 150 90" fill="none">
+        <path d="M10 88 V50 A65 65 0 0 1 140 50 V88" stroke="#c9a24b" stroke-width="1.4" opacity="0.55"></path>
+        <path d="M22 88 V54 A53 53 0 0 1 128 54 V88" stroke="#c9a24b" stroke-width="1" opacity="0.35"></path>
+        <circle cx="75" cy="20" r="3" fill="#e8caa0" opacity="0.7"></circle>
+      </svg>
+    </div>
+    <div class="eyebrow">توقيت اليوم</div>
+    <div class="divider">
+      <span class="ln"></span>
+      <svg viewBox="0 0 24 24" fill="#c9a24b"><path d="M12 0l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 15.2l-6.2 4.5 2.4-7.6L2 7.6h7.6z"></path></svg>
+      <span class="ln"></span>
+    </div>
+    <h1 id="hijriDate">—</h1>
+    <div class="greg" id="gregDate">—</div>
+    <div class="loc" id="locLabel">جارٍ تحديد الموقع…</div>
+    <div>
+      <button id="changeLocBtn" style="background:none;border:1px solid var(--line);color:var(--gold-soft); border-radius:20px; padding:4px 12px; font-family:inherit; font-size:12px; margin-top:6px; cursor:pointer;">📍 تغيير الموقع</button>
+    </div>
+    <div class="loc-warning" id="locWarning">تعذّر تحديد موقعك تلقائيًا عبر GPS، لذلك تُعرض المواقيت الآن لموقع افتراضي (مكة). حدد مدينتك يدويًا بالأسفل لعرض المواقيت الصحيحة.</div>
+
+    <div class="loc-panel" id="locPanel">
+      <input type="text" id="citySearch" placeholder="ابحث عن مدينتك (مثال: الدار البيضاء)">
+      <div class="loc-results" id="locResults"></div>
+      <div style="font-size:11px; color:var(--ink-dim); margin:4px 0 6px;">أو أدخل الإحداثيات يدويًا:</div>
+      <div class="loc-manual-row">
+        <input type="number" step="0.0001" id="manualLat" placeholder="خط العرض (مثال: 33.5731)">
+        <input type="number" step="0.0001" id="manualLng" placeholder="خط الطول (مثال: -7.5898)">
+      </div>
+      <div class="loc-actions">
+        <button class="btn secondary" id="retryGpsBtn">استخدام GPS</button>
+        <button class="btn" id="saveManualLocBtn">حفظ الموقع</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="active" data-tab="times"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>المواقيت</button>
+    <button data-tab="qibla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v3M12 18v3M21 12h-3M6 12H3"></path><path d="M12 12l4-4"></path></svg>القبلة</button>
+    <button data-tab="adhan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 01-3.4 0"></path></svg>الأذان</button>
+  </nav>
+
+  <!-- TIMES -->
+  <section class="panel active" id="panel-times">
+    <div class="next-card">
+      <div class="lbl">الصلاة القادمة</div>
+      <div class="name" id="nextName">—</div>
+      <div class="countdown" id="nextCountdown">--:--:--</div>
+    </div>
+    <ul class="times" id="timesList"></ul>
+  </section>
+
+  <!-- QIBLA -->
+  <section class="panel" id="panel-qibla">
+    <div class="qibla-wrap">
+      <div class="compass" id="compass">
+        <div class="ring"></div>
+        <div id="ticks"></div>
+        <div class="dir-label" style="top:8px; left:50%; transform:translateX(-50%);">ش</div>
+        <div class="dir-label" style="bottom:8px; left:50%; transform:translateX(-50%);">ج</div>
+        <div class="dir-label" style="top:50%; right:8px; transform:translateY(-50%);">ق</div>
+        <div class="dir-label" style="top:50%; left:8px; transform:translateY(-50%);">غ</div>
+        <div class="needle" id="needle">
+          <svg viewBox="0 0 260 260">
+            <polygon points="130,36 118,138 130,150 142,138" fill="#c9a24b"></polygon>
+            <polygon points="130,224 120,150 130,138 140,150" fill="#5b6b85"></polygon>
+          </svg>
+        </div>
+        <div class="center-dot"></div>
+      </div>
+      <div class="qibla-readout">
+        <div class="deg" id="qiblaDeg">—°</div>
+        <div class="note">اتجاه القبلة من موقعك الحالي نحو الكعبة المشرفة. فعّل البوصلة وحرّك الجهاز على شكل ٨ لمعايرته إن لزم. ملاحظة: بوصلة الجهاز تعتمد الشمال المغناطيسي وقد تختلف بضع درجات عن الشمال الحقيقي حسب موقعك.</div>
+        <button class="btn" id="enableCompass">تفعيل البوصلة</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADHAN -->
+  <section class="panel" id="panel-adhan">
+    <div class="card">
+      <h3>تنبيهات الأذان</h3>
+      <p>استخدم المفتاح المجاور لكل صلاة في تبويب «المواقيت» لتحديد الصلوات التي تريد تنبيهًا لها؛ يُحفظ اختيارك تلقائيًا على هذا الجهاز. لعرض إشعار نظام حقيقي داخل تطبيقك على AppCreator24، اربط مكوّن الإشعارات (Notification/Alarm) في منصتك بوقت كل صلاة مفعّلة من القائمة.</p>
+      <div class="row">
+        <span>تشغيل تنبيه صوتي تجريبي</span>
+        <button class="btn secondary" id="testSound">تجربة الصوت</button>
+      </div>
+      <span class="status-pill" id="notifStatus">الإشعارات: غير مفعّلة</span>
+    </div>
+    <div class="card">
+      <h3>طريقة الحساب</h3>
+      <div class="row">
+        <span>زاوية الفجر / العشاء</span>
+        <select id="methodSelect">
+          <option value="mwl">رابطة العالم الإسلامي (18°/17°)</option>
+          <option value="isna">الجمعية الإسلامية لأمريكا الشمالية (15°/15°)</option>
+          <option value="egypt">الهيئة المصرية العامة (19.5°/17.5°)</option>
+          <option value="karachi">جامعة العلوم الإسلامية بكراتشي (18°/18°)</option>
+        </select>
+      </div>
+    </div>
+    <div class="card">
+      <h3>مذهب العصر</h3>
+      <div class="row">
+        <span>طريقة حساب الظل</span>
+        <select id="asrSelect">
+          <option value="1">الجمهور (الظل مثل الشاخص)</option>
+          <option value="2">الحنفي (الظل مثلا الشاخص)</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    المواقيت محسوبة فلكيًا بحسب موقعك الجغرافي، وقد تختلف بدقائق يسيرة عن الجهات الرسمية المحلية.<br>
+    التاريخ الهجري تقديري بحساب فلكي تقريبي وقد يختلف يومًا عن الرؤية الرسمية للهلال.
+  </footer>
+</div>
+<div class="frieze"></div>
+
+<script>
+/* ---------------- Astronomical prayer-time engine ---------------- */
+const METHODS = {
+  mwl:     {fajr:18,   isha:17},
+  isna:    {fajr:15,   isha:15},
+  egypt:   {fajr:19.5, isha:17.5},
+  karachi: {fajr:18,   isha:18}
+};
+
+function julianDate(date){
+  let y=date.getUTCFullYear(), m=date.getUTCMonth()+1, d=date.getUTCDate();
+  if(m<=2){ y-=1; m+=12; }
+  const A=Math.floor(y/100), B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;
+}
+
+function sunPosition(jd){
+  const D = jd - 2451545.0;
+  const g = (357.529 + 0.98560028*D) % 360;
+  const q = (280.459 + 0.98564736*D) % 360;
+  const L = (q + 1.915*Math.sin(g*Math.PI/180) + 0.020*Math.sin(2*g*Math.PI/180)) % 360;
+  const e = 23.439 - 0.00000036*D;
+  const RAd = Math.atan2(Math.cos(e*Math.PI/180)*Math.sin(L*Math.PI/180), Math.cos(L*Math.PI/180)) * 180/Math.PI;
+  const RA = RAd/15;
+  const decl = Math.asin(Math.sin(e*Math.PI/180)*Math.sin(L*Math.PI/180)) * 180/Math.PI;
+  let eqt = q/15 - fixHour(RA);
+  return {decl, eqt};
+}
+function fixHour(h){ h = h - 24*Math.floor(h/24); return h<0? h+24 : h; }
+
+function timeForAngle(angle, decl, lat, dhuhr, direction){
+  const num = -Math.sin(angle*Math.PI/180) - Math.sin(lat*Math.PI/180)*Math.sin(decl*Math.PI/180);
+  const den = Math.cos(lat*Math.PI/180)*Math.cos(decl*Math.PI/180);
+  let ratio = num/den;
+  ratio = Math.max(-1, Math.min(1, ratio));
+  const H = Math.acos(ratio) * 180/Math.PI;
+  return dhuhr + direction*(H/15);
+}
+
+function asrTime(shadowFactor, decl, lat, dhuhr){
+  const altitude = Math.atan(1/(shadowFactor + Math.tan((lat-decl)*Math.PI/180))) * 180/Math.PI;
+  const num = Math.sin(altitude*Math.PI/180) - Math.sin(lat*Math.PI/180)*Math.sin(decl*Math.PI/180);
+  const den = Math.cos(lat*Math.PI/180)*Math.cos(decl*Math.PI/180);
+  let ratio = num/den;
+  ratio = Math.max(-1, Math.min(1, ratio));
+  const H = Math.acos(ratio) * 180/Math.PI;
+  return dhuhr + H/15;
+}
+
+function computeTimes(date, lat, lng, tzOffsetHours, method, asrFactor){
+  const jd = julianDate(date);
+  const {decl, eqt} = sunPosition(jd);
+  const dhuhr = 12 + tzOffsetHours - lng/15 - eqt;
+
+  const fajr    = timeForAngle(method.fajr, decl, lat, dhuhr, -1);
+  const sunrise = timeForAngle(0.833, decl, lat, dhuhr, -1);
+  const asr     = asrTime(asrFactor, decl, lat, dhuhr);
+  const maghrib = timeForAngle(0.833, decl, lat, dhuhr, 1);
+  const isha    = timeForAngle(method.isha, decl, lat, dhuhr, 1);
+
+  return {fajr, sunrise, dhuhr, asr, maghrib, isha};
+}
+
+function hoursToHHMM(h){
+  h = fixHour(h);
+  let hh = Math.floor(h);
+  let mm = Math.round((h-hh)*60);
+  if(mm===60){mm=0; hh+=1;}
+  hh = hh % 24;
+  const period = hh>=12 ? 'م' : 'ص';
+  let hh12 = hh % 12; if(hh12===0) hh12=12;
+  return `${hh12}:${String(mm).padStart(2,'0')} ${period}`;
+}
+function hoursToDate(h, baseDate){
+  const d = new Date(baseDate);
+  d.setHours(0,0,0,0);
+  d.setMinutes(Math.round(fixHour(h)*60));
+  return d;
+}
+
+/* ---------------- Qibla bearing ---------------- */
+const MECCA = {lat:21.4225, lng:39.8262};
+function qiblaBearing(lat, lng){
+  const φ1 = lat*Math.PI/180, φ2 = MECCA.lat*Math.PI/180;
+  const Δλ = (MECCA.lng - lng)*Math.PI/180;
+  const y = Math.sin(Δλ)*Math.cos(φ2);
+  const x = Math.cos(φ1)*Math.sin(φ2) - Math.sin(φ1)*Math.cos(φ2)*Math.cos(Δλ);
+  let θ = Math.atan2(y,x) * 180/Math.PI;
+  return (θ+360)%360;
+}
+
+/* ---------------- Hijri date (tabular / "Kuwaiti" algorithm, approximate) ---------------- */
+const HIJRI_MONTHS = ['محرم','صفر','ربيع الأول','ربيع الآخر','جمادى الأولى','جمادى الآخرة','رجب','شعبان','رمضان','شوال','ذو القعدة','ذو الحجة'];
+function gregorianToHijri(date){
+  const day = date.getDate();
+  const month = date.getMonth()+1;
+  const year = date.getFullYear();
+
+  let jd = Math.floor((1461*(year+4800+Math.floor((month-14)/12)))/4)
+         + Math.floor((367*(month-2-12*Math.floor((month-14)/12)))/12)
+         - Math.floor((3*Math.floor((year+4900+Math.floor((month-14)/12))/100))/4)
+         + day - 32075;
+
+  let l = jd - 1948440 + 10632;
+  const n = Math.floor((l-1)/10631);
+  l = l - 10631*n + 354;
+  const j = (Math.floor((10985-l)/5316))*(Math.floor((50*l)/17719)) + (Math.floor(l/5670))*(Math.floor((43*l)/15238));
+  l = l - (Math.floor((30-j)/15))*(Math.floor((17719*j)/50)) - (Math.floor(j/16))*(Math.floor((15238*j)/43)) + 29;
+  const hMonth = Math.floor((24*l)/709);
+  const hDay = l - Math.floor((709*hMonth)/24);
+  const hYear = 30*n + j - 30;
+
+  return {day:hDay, month:hMonth, year:hYear};
+}
+function toArabicDigits(n){
+  const map = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return String(n).replace(/[0-9]/g, d=> map[d]);
+}
+function formatHijri(date){
+  const h = gregorianToHijri(date);
+  const monthName = HIJRI_MONTHS[Math.min(Math.max(h.month-1,0),11)];
+  return `${toArabicDigits(h.day)} ${monthName} ${toArabicDigits(h.year)}هـ`;
+}
+
+/* ---------------- App state / UI wiring ---------------- */
+const PRAYER_LABELS = [
+  ['fajr','الفجر','Fajr'], ['sunrise','الشروق','Sunrise'], ['dhuhr','الظهر','Dhuhr'],
+  ['asr','العصر','Asr'], ['maghrib','المغرب','Maghrib'], ['isha','العشاء','Isha']
+];
+
+let coords = null;
+let qiblaDegAbs = null;
+
+function setLocLabel(txt){ document.getElementById('locLabel').textContent = txt; }
+
+/* ---------------- Location panel (manual override — in-app GPS proved unreliable in WebView) ---------------- */
+const LOC_STORAGE_KEY = 'rafiq_saved_location';
+function getSavedLocation(){ try{ return JSON.parse(localStorage.getItem(LOC_STORAGE_KEY)); }catch(e){ return null; } }
+function saveLocation(loc){ localStorage.setItem(LOC_STORAGE_KEY, JSON.stringify(loc)); }
+
+/* ---------------- Per-prayer alert toggles (persisted) ---------------- */
+const ALERTS_STORAGE_KEY = 'rafiq_prayer_alerts';
+const DEFAULT_ALERTS = {fajr:true, sunrise:false, dhuhr:true, asr:true, maghrib:true, isha:true};
+function getAlertPrefs(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(ALERTS_STORAGE_KEY));
+    return saved ? Object.assign({}, DEFAULT_ALERTS, saved) : Object.assign({}, DEFAULT_ALERTS);
+  }catch(e){ return Object.assign({}, DEFAULT_ALERTS); }
+}
+function saveAlertPrefs(prefs){ localStorage.setItem(ALERTS_STORAGE_KEY, JSON.stringify(prefs)); }
+function updateNotifStatus(){
+  const prefs = getAlertPrefs();
+  const enabledCount = Object.values(prefs).filter(Boolean).length;
+  const pill = document.getElementById('notifStatus');
+  if(enabledCount > 0){
+    pill.textContent = `الإشعارات: مفعّلة لـ ${toArabicDigits(enabledCount)} من ٦ أوقات`;
+    pill.classList.add('ok');
+  } else {
+    pill.textContent = 'الإشعارات: غير مفعّلة لأي وقت';
+    pill.classList.remove('ok');
+  }
+}
+
+const locPanel = document.getElementById('locPanel');
+const locWarning = document.getElementById('locWarning');
+document.getElementById('changeLocBtn').addEventListener('click', ()=>{
+  locPanel.classList.toggle('open');
+});
+
+let citySearchTimer = null;
+document.getElementById('citySearch').addEventListener('input', (e)=>{
+  clearTimeout(citySearchTimer);
+  const q = e.target.value.trim();
+  const resultsBox = document.getElementById('locResults');
+  if(q.length < 2){ resultsBox.innerHTML=''; return; }
+  citySearchTimer = setTimeout(async ()=>{
+    resultsBox.innerHTML = '<div class="loc-result-item">...جارٍ البحث</div>';
+    try{
+      const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=ar&format=json`);
+      const json = await res.json();
+      const items = json.results || [];
+      if(items.length===0){ resultsBox.innerHTML = '<div class="loc-result-item">لا توجد نتائج</div>'; return; }
+      resultsBox.innerHTML = items.map(it=>
+        `<div class="loc-result-item" data-lat="${it.latitude}" data-lng="${it.longitude}" data-label="${it.name}${it.admin1? ' — '+it.admin1:''}${it.country? '، '+it.country:''}">
+          ${it.name}${it.admin1? ' — '+it.admin1:''}${it.country? '، '+it.country:''}
+        </div>`).join('');
+      resultsBox.querySelectorAll('.loc-result-item[data-lat]').forEach(item=>{
+        item.addEventListener('click', ()=>{
+          const loc = {lat:parseFloat(item.dataset.lat), lng:parseFloat(item.dataset.lng), label:item.dataset.label};
+          applyLocation(loc, true);
+        });
+      });
+    }catch(err){
+      resultsBox.innerHTML = '<div class="loc-result-item">تعذّر البحث، تحقق من الاتصال بالإنترنت أو أدخل الإحداثيات يدويًا</div>';
+    }
+  }, 450);
+});
+
+document.getElementById('saveManualLocBtn').addEventListener('click', ()=>{
+  const lat = parseFloat(document.getElementById('manualLat').value);
+  const lng = parseFloat(document.getElementById('manualLng').value);
+  if(isNaN(lat) || isNaN(lng) || lat<-90 || lat>90 || lng<-180 || lng>180){
+    alert('يرجى إدخال إحداثيات صحيحة');
+    return;
+  }
+  applyLocation({lat, lng, label:`إحداثيات يدوية (${lat.toFixed(3)}, ${lng.toFixed(3)})`}, true);
+});
+
+document.getElementById('retryGpsBtn').addEventListener('click', ()=>{
+  localStorage.removeItem(LOC_STORAGE_KEY);
+  setLocLabel('جارٍ إعادة تحديد الموقع عبر GPS…');
+  locate(true);
+});
+
+function applyLocation(loc, fromUser){
+  coords = {lat:loc.lat, lng:loc.lng};
+  setLocLabel(loc.label || `خط العرض ${loc.lat.toFixed(2)} — خط الطول ${loc.lng.toFixed(2)}`);
+  locWarning.classList.remove('show');
+  if(fromUser){
+    saveLocation({lat:loc.lat, lng:loc.lng, label:loc.label});
+    locPanel.classList.remove('open');
+  }
+  render();
+}
+
+function render(){
+  if(!coords) return;
+  const now = new Date();
+  const tzOffset = -now.getTimezoneOffset()/60;
+  const method = METHODS[document.getElementById('methodSelect').value];
+  const asrFactor = parseFloat(document.getElementById('asrSelect').value);
+  const t = computeTimes(now, coords.lat, coords.lng, tzOffset, method, asrFactor);
+
+  const list = document.getElementById('timesList');
+  list.innerHTML='';
+  const entries = PRAYER_LABELS.map(([key,ar]) => ({key, ar, h:t[key], date:hoursToDate(t[key], now)}));
+
+  let nextEntry = entries.find(e => e.date > now);
+  if(!nextEntry){
+    // All of today's prayers have passed (after Isha) — compute tomorrow's Fajr properly.
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate()+1);
+    const tTomorrow = computeTimes(tomorrow, coords.lat, coords.lng, tzOffset, method, asrFactor);
+    nextEntry = {key:'fajr', ar:'الفجر', h:tTomorrow.fajr, date: hoursToDate(tTomorrow.fajr, tomorrow)};
+  }
+
+  entries.forEach(e=>{
+    const li = document.createElement('li');
+    if(e.key===nextEntry.key && e.date.toDateString()===nextEntry.date.toDateString()) li.classList.add('current');
+    const alertPrefs = getAlertPrefs();
+    const isOn = alertPrefs[e.key];
+    li.innerHTML = `
+      <div class="name">${e.ar}<small>${e.key}</small></div>
+      <div style="display:flex;align-items:center;">
+        <div class="time">${hoursToHHMM(e.h)}</div>
+        <div class="toggle${isOn? ' on':''}" data-key="${e.key}"><div class="dot"></div></div>
+      </div>`;
+    list.appendChild(li);
+  });
+  document.querySelectorAll('.toggle').forEach(t=>{
+    t.addEventListener('click', ()=>{
+      t.classList.toggle('on');
+      const prefs = getAlertPrefs();
+      prefs[t.dataset.key] = t.classList.contains('on');
+      saveAlertPrefs(prefs);
+      updateNotifStatus();
+    });
+  });
+
+  document.getElementById('nextName').textContent = nextEntry.ar;
+  updateCountdown(nextEntry.date);
+
+  // Qibla
+  qiblaDegAbs = qiblaBearing(coords.lat, coords.lng);
+  document.getElementById('qiblaDeg').textContent = Math.round(qiblaDegAbs) + '°';
+
+  // Dates
+  document.getElementById('hijriDate').textContent = formatHijri(now);
+  document.getElementById('gregDate').textContent = now.toLocaleDateString('ar-EG',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
+}
+
+let countdownTimer=null;
+let lastCountdownTarget=null;
+function updateCountdown(targetDate){
+  if(lastCountdownTarget && lastCountdownTarget.getTime()===targetDate.getTime() && countdownTimer){
+    return; // already counting down to this exact target, avoid resetting the interval every tick
+  }
+  clearInterval(countdownTimer);
+  lastCountdownTarget = targetDate;
+  function tick(){
+    const diff = targetDate - new Date();
+    if(diff<=0){ clearInterval(countdownTimer); render(); return; }
+    const h = Math.floor(diff/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    document.getElementById('nextCountdown').textContent =
+      `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+  tick();
+  countdownTimer = setInterval(tick, 1000);
+}
+
+function locate(forceGps){
+  const saved = getSavedLocation();
+  if(saved && !forceGps){
+    applyLocation(saved, false);
+    return;
+  }
+  if(!navigator.geolocation){
+    setLocLabel('الموقع التلقائي غير متاح على هذا الجهاز');
+    locWarning.classList.add('show');
+    locPanel.classList.add('open');
+    coords = {lat:21.4225, lng:39.8262};
+    render();
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const loc = {lat:pos.coords.latitude, lng:pos.coords.longitude, label:`خط العرض ${pos.coords.latitude.toFixed(2)} — خط الطول ${pos.coords.longitude.toFixed(2)}`};
+    applyLocation(loc, false);
+  }, err=>{
+    setLocLabel('تعذّر تحديد الموقع تلقائيًا — حدد مدينتك يدويًا بالأسفل');
+    locWarning.classList.add('show');
+    locPanel.classList.add('open');
+    coords = {lat:21.4225, lng:39.8262};
+    render();
+  }, {enableHighAccuracy:true, timeout:8000});
+}
+
+/* Tabs */
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* Compass ticks */
+const ticksWrap = document.getElementById('ticks');
+for(let i=0;i<24;i++){
+  const t = document.createElement('div');
+  t.className='tick';
+  t.style.transform = `rotate(${i*15}deg)`;
+  ticksWrap.appendChild(t);
+}
+
+/* Device compass */
+let currentHeading = 0;
+function applyNeedleRotation(){
+  if(qiblaDegAbs===null) return;
+  const rel = (qiblaDegAbs - currentHeading + 360) % 360;
+  document.getElementById('needle').style.transform = `rotate(${rel}deg)`;
+}
+function handleOrientation(e){
+  let heading;
+  if(e.webkitCompassHeading !== undefined){ heading = e.webkitCompassHeading; }
+  else if(e.alpha !== null){ heading = 360 - e.alpha; }
+  else return;
+  currentHeading = heading;
+  applyNeedleRotation();
+}
+document.getElementById('enableCompass').addEventListener('click', async ()=>{
+  if(typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function'){
+    try{
+      const res = await DeviceOrientationEvent.requestPermission();
+      if(res==='granted'){ window.addEventListener('deviceorientation', handleOrientation, true); }
+    }catch(err){ /* not supported */ }
+  } else {
+    window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+    window.addEventListener('deviceorientation', handleOrientation, true);
+  }
+});
+
+/* Sound test — simple tone via Web Audio (no external audio file needed) */
+document.getElementById('testSound').addEventListener('click', ()=>{
+  try{
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type='sine'; o.frequency.value=880;
+    g.gain.setValueAtTime(0.001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime+0.05);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+1.2);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime+1.3);
+  }catch(err){ /* Web Audio unsupported on this device/browser */ }
+});
+
+document.getElementById('methodSelect').addEventListener('change', render);
+document.getElementById('asrSelect').addEventListener('change', render);
+
+updateNotifStatus();
+locate();
+</script>
+</body>
+</html>
